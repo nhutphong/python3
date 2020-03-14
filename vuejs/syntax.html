@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <link rel="stylesheet" href="">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+</head>
+<body>
+
+    <div id="app-1">
+
+        <p v-on:click="myFunction">
+            v-on:click => gán event click cho p
+        </p>
+        <p v-bind:name="myName">
+            v-bind:name="myName" => gán attribute name="myName" cho p
+        </p>
+        <ol>
+            <li v-for="item in [...]">
+                {{ item }}
+                <!-- so lan loop <li> item </li>  -->
+            </li>
+        </ol>
+
+        <div v-if="type === 'A'">
+          A => v-show = v-if
+        </div>
+        <div v-else-if="type === 'B'">
+          B
+        </div>
+        <div v-else-if="type === 'C'">
+          C
+        </div>
+        <div v-else>
+          Not A/B/C
+        </div>
+
+  </div>
+
+<script src="test.js"></script>
+
+</body>
+</html>

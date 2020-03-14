@@ -1,0 +1,44 @@
+
+body {
+    text-align: center;
+}
+#content {
+    /* register grid */
+    display: grid;
+
+    max-width: 960px;
+    margin: 0 auto;
+
+
+    grid-template-columns: repeat(3, 1fr);
+    /* grid-template-columns: 30% 20% 50%; */
+    /* alright  nen dung */
+    /* grid-template-columns: 1fr 2fr 1fr; */
+    /* grid-template-rows: repeat(4,minmax(150px, auto)); */
+    grid-gap: 10px;
+
+}
+
+#content div {
+    background: #3bbced;
+    padding: 30px;
+}
+
+#content div:nth-child(even) {
+    background: #777;
+}
+
+.nested {
+    display: grid;
+    
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+/*     grid-column: 1/4; */
+    grid-column: span 3;
+}
+
+.nested p {
+    border: 1px solid #fff;
+    padding: 20px;
+    margin: 0;
+}

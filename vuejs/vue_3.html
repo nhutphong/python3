@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Hello Vue.js</title>
+
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+</head>
+<body>
+  <div id="app-1">
+    <p>mfirstName: {{ mfirstName() }}</p>
+    <p>mlastName: {{ mlastName() }}</p>
+    <p>dfullName: {{ dfullName }}</p>
+
+    <input type="text" v-model="dfullName"><br>
+
+  <!--   <p>{{dfirstName}}</p>
+    <p>{{dlastName}}</p> -->
+    <input type="checkbox" id="checkbox" v-model="dchecked">
+    <label for="checkbox">{{ dchecked }}</label><br>
+
+     <input type="checkbox" id="jack" value="Jack" v-model="dcheckedNames">
+    <label for="jack">Jack</label>
+    <input type="checkbox" id="john" value="John" v-model="dcheckedNames">
+    <label for="john">John</label>
+    <input type="checkbox" id="mike" value="Mike" v-model="dcheckedNames">
+    <label for="mike">Mike</label><br>
+
+    <span>Checked names: {{ dcheckedNames }}</span><br>
+
+    <input type="radio" id="one" value="One" v-model="dpicked">
+    <label for="one">One</label>
+    <br>
+    <input type="radio" id="two" value="Two" v-model="dpicked">
+    <label for="two">Two</label>
+    <br>
+    <span>dpicked: {{ dpicked }}</span><br>
+
+    <select v-model="dselected">
+      <option>A</option>
+      <option>B</option>
+      <option>C</option>
+    </select>
+    <br>
+
+    <span>Selected: {{ dselected }}</span><br>
+
+    <button @click="dcount+=1">You click me {{dcount}} times</button>
+    <button @click="dcount+=1">You click me {{dcount}} times</button>
+    <button @click="dcount+=1">You click me {{dcount}} times</button>
+    <br>
+
+    <transition name="fade" mode="out-in">
+  <!-- ... the buttons ... -->
+    </transition>
+
+  </div>
+
+  <script src="test_3.js"></script>
+
+</body>
+</html>

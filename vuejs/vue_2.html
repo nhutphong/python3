@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Hello Vue.js</title>
+
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+</head>
+<body>
+  <div id="app-5">
+    <div class="box" :style="{fontSize: cssTextColor + 'px' , background: cssBgColor}">
+
+      <h1 :style="{color: cssTextColor}">{{ dataName }}</h1>
+
+      <input type="text" v-model="dataName">
+      <input type="color" v-model="cssBgColor">
+      <input type="color" v-model="cssTextColor">
+      <input type="range" v-model="cssTextSize">
+
+      <button @click="cssBgColor= 'red'">Click</button>
+
+    </div>
+  </div>
+
+  <div id="app-6">
+    <ol>
+    <!--
+      Now we provide each todo-item with the todo object
+      it's representing, so that its content can be dynamic.
+      We also need to provide each component with a "key",
+      which will be explained later.
+    -->
+      <list-dict
+        v-for="dictItem in groceryList"
+        v-bind:dict="dictItem"
+        v-bind:key="dictItem.id">
+      </list-dict>
+    </ol>
+
+    <h1>{{ mGetMethods() }}</h1>
+    <h4>{{ cGetComputed }}</h4>
+    <span v-once>This will never change: {{ dMessage }}</span>
+    <p :id="'myId'" :class="'myclass'">bla bla bla</p>
+
+    <p>dMessage: {{ dMessage }}</p>
+    <p>cReverseMessage: {{ cReverseMessage }}</p>
+
+    <input type="text" v-model="dMessage">
+  </div>
+
+
+<script src="test.js"></script>
+</body>
+</html>

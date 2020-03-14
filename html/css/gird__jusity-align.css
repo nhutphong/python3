@@ -1,0 +1,64 @@
+
+body {
+    text-align: center;
+}
+#content {
+    /* register grid */
+    display: grid;
+
+    max-width: 960px;
+    margin: 0 auto;
+
+
+    grid-template-columns: repeat(3, 1fr);
+    /* grid-template-columns: 30% 20% 50%; */
+    /* alright  nen dung */
+    grid-auto-rows: minmax(150px, auto);
+    grid-gap: 10px;
+
+/*     chia rows: start - end */
+    /* align-items:stretch; */
+
+    /* chia colums: start - end */
+    /* justify-items:end; */
+
+}
+
+#content div {
+    background: #3bbced;
+    padding: 30px;
+}
+
+#content div:nth-child(even) {
+    background: #777;
+}
+
+
+
+.one {
+    justify-self:end;
+    align-self: end;
+}
+
+.two {
+    align-self:center;
+}
+
+.three {
+    justify-self: start;
+    align-self: start;
+}
+/*
+.four {
+    grid-column: 4/7;
+    grid-row: 2/4;
+}
+
+.five {
+    grid-column: 3/7;
+}
+
+.six {
+    grid-row: 4;
+    grid-column:1/3;
+} */

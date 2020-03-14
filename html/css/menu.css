@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: sans-serif;
+    color: #333;
+}
+
+#menu ul {
+    list-style-type: none;
+    background: #9C27B0;
+    text-align: center;
+}
+
+#menu ul li {
+    color: white;
+    display: inline-table;
+    width: 120px;
+    height: 40px;
+    line-height: 40px;
+    /* cha=relative = cố định vị trí ko ảnh hưởng tới thành phân khác */
+    position: relative;
+}
+
+#menu ul li a {
+    color: #f1f1f1;
+    text-decoration: none;
+    display: block;
+}
+
+#menu ul li a:hover {
+    background: #f1f1f1;
+    color: #333;
+}
+
+#menu ul li > .sub-menu {
+    display: none;
+
+    
+    /* con */
+    position: absolute;
+}
+
+#menu ul li:hover .sub-menu {
+    display: block;
+}

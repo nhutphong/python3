@@ -1,0 +1,30 @@
+.container {
+    width: 960px;
+    border: 1px solid red;
+    margin: 0 auto;
+}
+
+.col {
+    width: 100px;
+    height: 100px;
+}
+
+.red {
+    background-color: red;
+}
+
+.blue {
+    background-color: aqua;
+}
+
+.green {
+    background-color: green;
+}
+
+.pink {
+    background-color: pink;
+}
+
+.yellow {
+    background-color: yellow;
+}

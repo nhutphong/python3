@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Hello Vue.js</title>
+
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+</head>
+<body>
+
+  <div id="app-1">
+    <p>
+      {{ myName }}
+    </p>
+    <br>
+    <button @click="reverseNameVue">reverseMyName</button>
+    <br><br>
+
+
+    <span v-if="seen">v-if="seen = true"</span>
+    <br>
+
+    <ol>
+      <li v-for="todo in todos">
+        {{ todo.text }}
+      </li>
+    </ol>
+
+  </div>
+
+  <div id="app-2">
+
+    <button id="runDate" @click="runDateNowVue">Date</button>
+    <button id="runRandom" @click="runRandomVue">Start</button>
+    <button id="removeRandom" @click="runStopRandomVue">Stop</button>
+    <!-- <button id="runBefore" v-on:click="createParaBefore">createBe</button> -->
+
+    <p id="show">Tao la id=show</p>
+
+  </div>
+
+  <div id="app-3" @mousemove="runMoveVue">
+    <span>rowY = {{row}} ||||||| colX = {{col}}</span>
+    <br>
+    <button @click="runAlertVue('Hello Vue.js')">Alert</button>
+    <br>
+
+    <button @click="count+=1">Count++</button>
+    <button @click="count-=1">Count--</button>
+    <br>
+    <p>{{ count }}</p>
+  </div>
+
+  <div id="app-4">
+    Nhap A: <input type="text" id="myA" value="" placeholder="NumberA">
+    <br>
+    Nhap B: <input type="text" id="myB" placeholder="NumberB">
+    <br>
+
+    <button type="" @click="runTongVue">Tong</button>
+    <p> {{ numberSum }}</p>
+    <br>
+    Input Name: <input type="text" id="idToUpper" @change="runToUpperVue">
+
+  </div>
+
+
+  <script src="test.js"></script>
+
+</body>
+</html>
