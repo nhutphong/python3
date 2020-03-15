@@ -218,7 +218,11 @@ def function(first_name='phong', message ='Hello', last_name='nhut'):
     print(f"{message}, {first_name} {last_name}")
 
 
-def format(*args, **kwargs):
+def format_python(name='phong', letter='#'):
+    print(f"{name:{letter}^90}")
+
+
+def format_one(*args, **kwargs):
 	def wrapped(func):
 		print(f"{kwargs['start']:{kwargs['letter']}^50}")
 		func()
@@ -234,7 +238,7 @@ def format_two(func):
 	return wrapped
 
 
-# @format(start='NHUT', end='PHONG', letter='#') #cach 2 auto get_name()
+# @format_one(start='NHUT', end='PHONG', letter='#') #cach 2 auto get_name()
 @format_two #cach 1
 def get_name():
 	print('vo thanh phong')
