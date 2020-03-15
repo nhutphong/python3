@@ -69,14 +69,6 @@ def add(x, y):
     return ls
 
 
-def my_decorator(func):
-    def wrap_func():
-        print("wrap Tren")
-        func()
-        print("Wrap duoi")
-    return wrap_func
-
-
 def gen(n):
     ls = []
 
@@ -92,21 +84,6 @@ def gen(n):
 def my_generator(n):
     for i in range(n):
         yield i**3
-
-
-# cach 2
-@my_decorator
-def my_center():
-    print("my_center o giua")
-
-
-def deco(func):
-    # wrapper(*args, **kwargs) nen dung param *args, **kwargs
-    def wrapper(*args, **kwargs):
-        print("Tao la Wrapper DAU")
-        func(*args, **kwargs)
-        print("Tao la Wrapper CUOI")
-    return wrapper
 
 
 def decorator(func):
@@ -127,7 +104,6 @@ NOTE = '''
         con trong wrapper thi func(full_name) = my_name(full_name) chi co
         1 param
 '''
-
 
 
 class Pro(object):
@@ -152,7 +128,7 @@ class Pro(object):
 
 # paramater cho decorator
 def chuc_danh(job):
-    def container(func):
+    def function(func):
         def wrapped(*args, **kwargs):
             print("wrapped Dau")
             print(f"chuc_danh: {job}")
@@ -163,11 +139,11 @@ def chuc_danh(job):
 
         return wrapped
 
-    return container
+    return function
 
 
 @chuc_danh('Doctor')
-def xuat_ten(*lis):
+def xuat_ten(*tup):
     return random.choice(lis)
 
 
