@@ -211,18 +211,37 @@ class Foo:
 
 class Account:
 
-    def __init__(self, first, last, pay):
-        self.first = first
-        self.last = last
-        self.pay = pay
+    def __init__(self, first_name, last_name, **kwargs):
+        self.first_name = first_name
+        self.last_name = last_name
 
+        # acc = Account('phong', 'nhut', city='dong nai', old=27, country='vn')
+        # tao co acc.city, acc.old, acc.country, nho FOR ben duoi
+        for attr, value in kwargs.items():
+            self.__dict__[attr] = value
+
+    def __setitem__(self, attr, value):
+        print('__setitem__')
+        # self[attr] = value
+        self.__dict__[attr] = value
+
+    def __getitem__(self, attr):
+        print("__getitem__")
+        # self[::], self[index] #RecursionError
+        return self.__dict__[attr]
+
+    @property
     def full_name(self):
-        return f"{self.first} {self.last}"
+        return f"{self.first_name} {self.last_name}"
 
     @classmethod
     def from_string(cls, flp_string=''):
-        first, last, pay = flp_string.split('-')
-        return cls(first, last, pay)
+        first_name, last_name, pay = flp_string.split('-')
+        return cls(first_name, last_name, pay)
+
+    def add_method(self, func): 
+        self.__dict__[func.__name__] = func
+
 
 
 class Data(object):
@@ -291,55 +310,6 @@ class VarPrivate:
 
     def get_id(self):
         return VarPrivate.__ID
-
-
-class Game:
-    """ Tao la Class Game"""
-    def tam_giac_int(self, rows=5):
-
-        show = 1
-        for row in range(1,rows+1):
-
-            for _ in range(1,row+1):
-                print(show, end=' ')
-                show+=1
-
-            print()
-
-    def tam_giac_string(self, string='phong'):
-
-        name = string
-        for row in range(len(name)):
-
-            for col in range(row+1):
-                print(name[col], end='')
-
-            print()
-
-    def show_1(self):
-        name = input("nhap ten ban:")
-        for i in range(len(name)):
-            print(f"{name[0:i+1]}")
-
-    def show_2(self):
-        name = input("nhap ten ban:")
-        for i in range(len(name)):
-            print(f"{name[0:len(name)-i]}")
-
-    def show_1_reverse(self):
-        name = input("nhap ten ban:")
-        for i in range(len(name)-1):
-            print(f"{name[i::-1]}")
-
-    def show_2_reverse(self):
-        name = input("nhap ten ban:")
-        for i in range(1,len(name)+1):
-            print(f"{name[-i::-1]}")
-
-    def encrypt(self, key=13, string='vothanhphong'):
-        key = key
-        string = string
-        pass
 
 
 class Fib:

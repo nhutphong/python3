@@ -3,11 +3,10 @@ root = true
 [*]
 indent_style = space
 indent_size = 4
-insert_final_newline = true
-trim_trailing_whitespace = true
-
-end_of_line = lf
 charset = utf-8
+trim_trailing_whitespace = false
+insert_final_newline = false
+end_of_line = lf
 
 
 # Docstrings and comments use max_line_length = 79
@@ -16,6 +15,10 @@ max_line_length = 119
 
 # Use 2 spaces for the HTML files
 [*.html]
+indent_size = 2
+wrap_width = 120
+
+[*.vue]
 indent_size = 2
 
 # The JSON files contain newlines inconsistently
