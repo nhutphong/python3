@@ -4,6 +4,8 @@ import random as rd
 
 '''
 '''
+# class_name.mro() => xem do uu tien thua ke
+
 class PersonAbstact(ABC):
     """ abtract class
     """
@@ -43,7 +45,7 @@ class Animal:
     __title = "Wild"
     __ANIMAL = 'TAO LA ANIMAL'
 
-    # private variable and private method không thể truy cập trực tiếp từ obj
+    # private variable and private method không thể truy cập trực tiếp từ obj  
     # obj.__name, obj.__method() sẽ error nếu muốn thì dùng
     # obj._classname__name, obj._classname__method(), hoặc dùng encapsolution
     # encapsolution => tạo method() gọi  private variable, private method()
@@ -130,33 +132,6 @@ def polymorphism(dog, meo):
     for pet in [dog, meo]:
         print(type(pet))
         print(pet.speak())
-
-
-class First:
-    def getClass(self):
-        print("Class First")
-
-
-class Second(First):
-    def getClass(self):
-        print("Class Second")
-
-
-class Third(First):
-    def getClass(self):
-        print("class Third")
-        # ưu tiên cha->con thừa kế gần,  hơn là ông->cháu(bắt cầu)
-        # neu ko chung parent thi trí trí Third(Second, First) = Second được ưu tiên
-        # super().getClass()
-
-        # xác định cựu thể class cha nhưng phải có self
-        # First.getClass(self)
-
-
-class Four(Third, Second):
-    def getClass(self):
-        print("Class Four")
-        # super().getClass()
 
 
 class Foo:
@@ -375,4 +350,3 @@ def note():
 
 if __name__ == '__main__':
     pass
-

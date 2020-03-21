@@ -56,43 +56,32 @@ function birthYear(year) {
 
 var input_year = prompt("Nam sinh cua ban la bao nhieu");
 
-var name = 'Phong';
-
-function first() {
-  a = 'mot';
-  second();
-  name += a;
-  return name;
-}
-
-function second() {
-  b = 'hai';
-  third();
-  name += b;
-}
-
-function third() {
-  c = 'ba';
-  name += c;
-}
-
-var fir = first()
-
-// phongbahaimot
-console.log(fir);
-
-function name(ten) {
-  console.log(ten)
-}
-
-var name1 = function(ten) {
-  console.log(ten)
-}
 
 function arrow
 (param, ...) => <return> statements
 var name2 = (ten) => console.log(ten);
 tuoi() function arrow
+
+#function contructor
+function Person(firstName, lastName, age, eyeColor) {
+  this.firstName = firstName; 
+  this.lastName = lastName;
+  this.age = age;
+  this.eyeColor = eyeColor;
+  this.changeName = function (name) {
+    this.lastName = name;
+  };
+  this.get_nationality = function() {
+    return this.nationality
+  }
+}
+
+#add attributes cho Person
+Person.prototype.nationality = "English";
+
+person = new Person('thanh', 'dung', 27, 'xanh')
+person.nationality
+person.get_nationality()
 
 var variableName: có thể dùng ngoài outblock khối ìf, while, for, switch
 let variableName: chỉ dùng trong inblock if, while, for ...
@@ -102,13 +91,6 @@ name[0] = 'vo' -> allowed => có thể dùng method() để change value cho t�
 item
 obj.fullName.call(obj1) => truyen attributes cua obj1 vao fullName of obj du dung
 
-var self = {
-  old: 25,
-  tuoi: () => console.log(self.old, self),
-  c: function() { console.log(self.old, self)},
-};
-
-b, c la kiểu khai vao function trong obj self
 
 có 2 loại object
 var list = []
@@ -137,3 +119,5 @@ comma và với apply thì đối số cho bởi mảng array)
 Hàm bind thì hơi khác hơn một chút. Hàm này không gọi hàm trực tiếp mà nó sẽ trả
 về một hàm mới. Và bạn có thể sử dụng hàm số mới này sau. 
 Về cách truyền tham số vào thì nó giống với hàm call.
+
+
