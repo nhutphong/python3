@@ -186,14 +186,23 @@ class Foo:
 
 class Account:
 
-    def __init__(self, first_name, last_name, **kwargs):
+    def __init__(self, first_name=None, last_name=None , age=None, **kwargs):
         self.first_name = first_name
         self.last_name = last_name
+        self.__age = age
 
         # acc = Account('phong', 'nhut', city='dong nai', old=27, country='vn')
         # tao co acc.city, acc.old, acc.country, nho FOR ben duoi
         for attr, value in kwargs.items():
             self.__dict__[attr] = value
+
+    #print(acc)
+    def __str__(self):
+        return f"Account({self.full_name})"
+
+    #terminal> acc
+    def __repr__(self):
+        return f"Account({self.full_name})"
 
     def __setitem__(self, attr, value):
         print('__setitem__')
@@ -205,6 +214,18 @@ class Account:
         # self[::], self[index] #RecursionError
         return self.__dict__[attr]
 
+    @property
+    def age(self):
+        return self.__age
+
+    @age.setter
+    def age(self, age):
+        if age <= 18:
+            raise Exception(f"ban chi: {age} tuoi phai 18 tuoi ok ")
+        else:
+            self.__age = age
+
+    
     @property
     def full_name(self):
         return f"{self.first_name} {self.last_name}"
