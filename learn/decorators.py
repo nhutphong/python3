@@ -48,26 +48,6 @@ class Circle:
         """Value of π, could use math.pi instead though"""
         return 3.1415926535
 
-def decorator1(func):
-        # wrap và add phải có số params(đối số) = nhau add(x,y) thì wrap(a,b) 2 đối số
-    def wrapper(dau, cuoi):
-        start = time.time()
-        fun = func(dau, cuoi)
-        ends = time.time()
-        result = ends - start
-        return (f'\n\nDa la ke qua cua fun: {fun}\n\nThoi gian chay chuong trinh: {result}')
-    return wrapper
-
-
-@decorator1
-def add(x, y):
-    ls = []
-
-    for i in range(x, y):
-        # print(i,end=' ')
-        ls.append(i)
-    return ls
-
 
 def gen(n):
     ls = []
@@ -173,11 +153,11 @@ def to_upper(func):
     return wrapped
 
 
-def to_prefix(func):
+def to_join(func):
     def wrapped(*args, **kwargs):
-        print("start to_prefix HHHHHHH")
+        print("start to_join HHHHHHH")
         text = func(*args, **kwargs)
-        print("end to_prefix HHHHHH")
+        print("end to_join HHHHHH")
         result = ' '.join([text, 'thanh phong'])
 
         return result
@@ -186,7 +166,7 @@ def to_prefix(func):
 
 
 @to_upper
-@to_prefix
+@to_join
 def dec_check(text='let goooo'):
     return text
 
@@ -221,6 +201,7 @@ def function(first_name='phong', message ='Hello', last_name='nhut'):
 def format_python(name='phong', letter='#'):
     print(f"{name:{letter}^90}")
 
+
 def format_one(func):
 	def wrapped(*args, **kwargs):
 		print(f"{kwargs['start']:{kwargs['letter']}^50}")
@@ -240,12 +221,23 @@ def format_two(*args, **kwargs):
 @format_one #cach 1
 def get_name():
 	print('vo thanh phong')
-
 # get_name(start='NHUT', end='PHONG', letter='#') #cach 1
+
+
+def design(name=None, letter='#'):
+    def function(func):
+        def wrapped(*args, **kwargs):
+            print(f"{name+ ' START ':{letter}^85}")
+            fun = func(*args, **kwargs)
+            print(f"{name+ ' END ':{letter}^85}", end='\n'*2)
+            return fun
+        return wrapped
+    return function
 
 
 def main():
     pass
+
 
 if __name__ == '__main__':
     pass
