@@ -213,7 +213,7 @@ class DecoratorClass:
         print("__call__ end")
   
 # adding decorator to the class  
-@DecoratorClass # no da run __init__() truoc khi goi functions()
+@DecoratorClass # autorun DecoratorClass.__init__() truoc khi goi functions()
 def function(first_name='phong', message ='Hello', last_name='nhut'): 
     print(f"{message}, {first_name} {last_name}")
 
