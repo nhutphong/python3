@@ -205,23 +205,26 @@ def format_python(name='phong', letter='#'):
 def format_one(func):
 	def wrapped(*args, **kwargs):
 		print(f"{kwargs['start']:{kwargs['letter']}^50}")
-		func()
+		fun = func(data=kwargs)
 		print(f"{kwargs['end']:{kwargs['letter']}^50}")
+        return fun
 	return wrapped
 
 
 def format_two(*args, **kwargs):
 	def wrapped(func):
 		print(f"{kwargs['start']:{kwargs['letter']}^50}")
-		func()
+		fun = func(data=kwargs)
 		print(f"{kwargs['end']:{kwargs['letter']}^50}")
+        return fun
 	return wrapped
 
 
 # @format_two(start='NHUT', end='PHONG', letter='#') #cach 2 auto get_name()
+# cach 2 va tao variable get_name = return fun = data=kwargs=dict 
 @format_one #cach 1
-def get_name():
-	print('vo thanh phong')
+def get_name(data):
+	return data
 # get_name(start='NHUT', end='PHONG', letter='#') #cach 1
 
 
