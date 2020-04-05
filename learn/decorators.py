@@ -203,37 +203,57 @@ def format_python(name='phong', letter='#'):
 
 
 def format_one(func):
-	def wrapped(*args, **kwargs):
-		print(f"{kwargs['start']:{kwargs['letter']}^50}")
-		fun = func(data=kwargs)
-		print(f"{kwargs['end']:{kwargs['letter']}^50}")
+    def wrapped(*args, **kwargs):
+        print(f"{kwargs['start']:{kwargs['letter']}^50}")
+        fun = func(data=kwargs)
+        print(f"{kwargs['end']:{kwargs['letter']}^50}")
         return fun
-	return wrapped
+    return wrapped
 
 
 def format_two(*args, **kwargs):
-	def wrapped(func):
-		print(f"{kwargs['start']:{kwargs['letter']}^50}")
-		fun = func(data=kwargs)
-		print(f"{kwargs['end']:{kwargs['letter']}^50}")
+    def wrapped(func):
+        print(f"{kwargs['start']:{kwargs['letter']}^50}")
+        fun = func(data=kwargs)
+        print(f"{kwargs['end']:{kwargs['letter']}^50}")
         return fun
-	return wrapped
+    return wrapped
 
 
 # @format_two(start='NHUT', end='PHONG', letter='#') #cach 2 auto get_name()
 # cach 2 va tao variable get_name = return fun = data=kwargs=dict 
 @format_one #cach 1
 def get_name(data):
-	return data
+    return data
 # get_name(start='NHUT', end='PHONG', letter='#') #cach 1
 
+#cach 2
+def design(*args, **kwargs):
+    def wrapped(func):
+        print('Tao la wrapped START')
+        func()
+        print('Tao la wrapped END')
+        context = dict(
+            username=kwargs['username'], 
+            password=kwargs['password']
+            )
+        return context
 
-def design(name=None, letter='#'):
+    return wrapped
+
+@design(username='phong', password=12345)
+def show():
+    print('ban da logged')
+# auto variable show = context
+
+
+# params for decorator
+def terminal(name=None, letter='#'):
     def function(func):
         def wrapped(*args, **kwargs):
-            print(f"{name+ ' START ':{letter}^85}")
+            print(f"{name + ' START ':{letter}^85}")
             fun = func(*args, **kwargs)
-            print(f"{name+ ' END ':{letter}^85}", end='\n'*2)
+            print(f"{name + ' END ':{letter}^85}", end='\n'*2)
             return fun
         return wrapped
     return function
