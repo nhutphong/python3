@@ -205,26 +205,28 @@ def format_python(name='phong', letter='#'):
 def format_one(func):
     def wrapped(*args, **kwargs):
         print(f"{kwargs['start']:{kwargs['letter']}^50}")
-        fun = func(data=kwargs)
+        fun = func(**kwargs)
         print(f"{kwargs['end']:{kwargs['letter']}^50}")
         return fun
+
     return wrapped
 
 
 def format_two(*args, **kwargs):
     def wrapped(func):
         print(f"{kwargs['start']:{kwargs['letter']}^50}")
-        fun = func(data=kwargs)
+        fun = func(**kwargs)
         print(f"{kwargs['end']:{kwargs['letter']}^50}")
         return fun
+
     return wrapped
 
 
 # @format_two(start='NHUT', end='PHONG', letter='#') #cach 2 auto get_name()
 # cach 2 va tao variable get_name = return fun = data=kwargs=dict 
 @format_one #cach 1
-def get_name(data):
-    return data
+def get_name(**kwargs):
+    return kwargs
 # get_name(start='NHUT', end='PHONG', letter='#') #cach 1
 
 #cach 2
@@ -242,7 +244,7 @@ def design(*args, **kwargs):
     return wrapped
 
 @design(username='phong', password=12345)
-def show():
+def show(**kwargs):
     print('ban da logged')
 # auto variable show = context
 
