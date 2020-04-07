@@ -267,12 +267,28 @@ def decorator_age(func):
     def wrapped(wage, *args, **kwargs):
         print(f"SWAP-START")
         print(f"wrapped haha")
-        # fun = func(*args, **kwargs)
-        fun = func(age=wage)
+        fun = func(age=wage) #han che dung
         print(f"SWAP-END")
         return fun
 
     return wrapped
+# de hieu 
+
+
+def decorator_age_two(func):
+    @wraps(func) # func.__name__ == get_age.__name__
+    #neu khong co @wraps(func) thi la wrapped.__name__
+    def wrapped(*args, **kwargs):
+        print(f"SWAP-START")
+        print(f"wrapped haha")
+        fun = func(*args, **kwargs) #nen dung
+        print(f"SWAP-END")
+        return fun
+
+    return wrapped
+# param chac che hon chi nhan get_age(27) or get_age(age=27)
+# 
+
 
 
 @decorator_age
@@ -281,6 +297,7 @@ def get_age(age):
     print('Tao la get_age')
     return age
 
+#han che dung
 print(get_age(wage=27))
 
 
