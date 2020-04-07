@@ -261,6 +261,29 @@ def terminal(name=None, letter='#'):
     return function
 
 
+def decorator_age(func):
+    @wraps(func) # func.__name__ == get_age.__name__
+    #neu khong co @wraps(func) thi la wrapped.__name__
+    def wrapped(wage, *args, **kwargs):
+        print(f"SWAP-START")
+        print(f"wrapped haha")
+        # fun = func(*args, **kwargs)
+        fun = func(age=wage)
+        print(f"SWAP-END")
+        return fun
+
+    return wrapped
+
+
+@decorator_age
+def get_age(age):
+    """Docstring get_age"""
+    print('Tao la get_age')
+    return age
+
+print(get_age(wage=27))
+
+
 def main():
     pass
 
