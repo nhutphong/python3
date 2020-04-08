@@ -224,10 +224,11 @@ def format_two(*args, **kwargs):
 
 # @format_two(start='NHUT', end='PHONG', letter='#') #cach 2 auto get_name()
 # cach 2 va tao variable get_name = return fun = data=kwargs=dict 
-@format_one #cach 1
+@format_one #cach 1 se run format_one() va cho
+# khi get_name(blalba, ...) se run wrapped(*args, **kwargs)
 def get_name(**kwargs):
     return kwargs
-# get_name(start='NHUT', end='PHONG', letter='#') #cach 1
+# get_name(start='NHUT', end='PHONG', letter='#') #cach 1 
 
 #cach 2
 def design(*args, **kwargs):
@@ -250,9 +251,13 @@ def show(**kwargs):
 
 
 # params for decorator
-def terminal(name=None, letter='#'):
-    def function(func):
-        def wrapped(*args, **kwargs):
+def terminal(name=None, letter='#'): #1
+    print("Tao la terminal")
+
+    def function(func): #2
+        print("Tao la function")
+
+        def wrapped(*args, **kwargs): #3
             print(f"{name + ' START ':{letter}^85}")
             fun = func(*args, **kwargs)
             print(f"{name + ' END ':{letter}^85}", end='\n'*2)
@@ -291,14 +296,14 @@ def decorator_age_two(func):
 
 
 
-@decorator_age
+@terminal # run #1 khong nen
+@terminal() #run #1 va #2 decorator co param nen dung
 def get_age(age):
     """Docstring get_age"""
     print('Tao la get_age')
     return age
 
-#han che dung
-print(get_age(wage=27))
+print(get_age(age=27)) #run #3 wrapped(*args, **kwargs)
 
 
 def main():
