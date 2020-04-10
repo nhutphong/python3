@@ -306,6 +306,57 @@ def get_age(age):
 print(get_age(age=27)) #run #3 wrapped(*args, **kwargs)
 
 
+def register(func):
+    print("Tao la register")
+
+    @wraps(func)
+    def wrapped(username, password, *args, **kwargs):
+        # print(f"SWAP-START")
+        # print(f"wrapped haha")
+        # fun = func(*args, **kwargs)
+
+        name_to_list = [n for n in username]
+        random.shuffle(name_to_list)
+        name_new = str.join('', name_to_list)
+
+        pass_to_list = [p for p in password]
+        random.shuffle(pass_to_list)
+        pass_new = str.join('', pass_to_list)
+
+        fun = func(username=name_new, password=pass_new, *args, **kwargs)
+        # print(f"SWAP-END")
+        return fun
+
+    return wrapped
+
+
+@register
+def get_user(username, password):
+    return dict(username=username, password=password)
+
+
+def find_password(username, password, source=None, *args, **kwargs):
+    username, password = source
+    for id in range(1,1_000_000):
+        user_find, pwd_find = get_user(username, password).values()
+        if user_find == username and pwd_find == password:
+            print(f"{id} - found \nusername: {user_find}\npassword: {pwd_find}")
+            break
+        else:
+            print(f"{id} - username: {user_find} | password: {pwd_find}", end='\r')
+
+
+def time_run(func, *args, **kwargs):
+    start = time.time()
+    func(*args, **kwargs)
+    end = time.time()
+    return end-start
+
+duration = time_run(find_password, 'dung', '123456', ['dung', '123456'])
+
+print(f"{duration:,.6f}")
+
+
 def main():
     pass
 

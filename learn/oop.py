@@ -284,30 +284,6 @@ class Data(object):
     #     return getattr(self, key) # return value cua attribute
 
 
-class VarPrivate:
-    """
-        Tao la class VarPrivate()
-    """
-    __ID = 'CS500'
-
-    def __init__(self, sname, iprice, isoluong):
-        self.__sname = sname
-        self.__iprice = iprice
-        self.__isoluong = isoluong
-
-    def get_iprice_isoluong(self):
-            return self.__iprice * self.__isoluong
-
-    def get_sname(self):
-        return self.__sname
-
-    def add_name(self):
-        return self.get_sname() + '-ZZZ'
-
-    def get_id(self):
-        return VarPrivate.__ID
-
-
 class Fib:
     def __init__(self):
         pass
