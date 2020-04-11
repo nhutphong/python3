@@ -145,12 +145,13 @@ def gen(name='phong'):
     # 4 next(g) cuoi cung se cho return 5**3
 
 
-""" iterator gen2, gan nhu tuong tu nhau"""
+""" iterator <=> gen2, tuong tu nhau"""
 
 
 def iterator(name='phong'):
     return iter(name)
 
+#return iter(name) <=> yield from name
 
 def gen2(name='phong'):
     yield from name
@@ -161,7 +162,7 @@ def with_file(file_root, file_new='new_file'):
         content = f.read()
 
         with open(file_new, 'w') as new:
-            # file=new => cho phep print() tao file tu content xuat ra =prompt
+            # file=new => cho phep print() tao file tu content xuat ra=prompt
             print(content, 'them noi dung vao cuoi file', file=new)
 
 

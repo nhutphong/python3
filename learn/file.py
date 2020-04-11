@@ -59,5 +59,51 @@ class MessageWriter(object):
             file.close() 
 
 
+def with_file(file_root, file_new='new_file'):
+    with open(file_root,) as f:
+        content = f.read()
+
+        with open(file_new, 'w') as new:
+            # file=new => cho phep print() tao file tu content xuat ra=prompt
+            print(content, 'them noi dung vao cuoi file', file=new)
+
+
+# Python program for creating a 
+# context manager using @contextmanager 
+# decorator 
+def print_flush_true(content, /, delay=.05):
+
+    print("flush=True")
+    # flush=True => in tu tren xuong cho time.sleep xong roi in tiep
+    # flush=Flase => cho time.sleep xong roi moi in 1 luc tat ca
+    for c in content:
+        print(c, end='', flush=True)
+        time.sleep(delay)
+
+    print()
+
+
+@contextmanager
+def ContextManager(file, mode='r'): 
+    
+    # Before yield as the enter method 
+    print("__enter__ method called") #1
+    f = open(file, mode=mode)
+
+    yield f #2 with as
+    
+    # After yield as the exit method
+    f.close()
+    print("__exit__ method called") #3
+
+with ContextManager('zing.txt') as file: #2
+    print(f"{'with as start':-^85}")
+
+    content = file.read()
+    print_flush_true(content)
+
+    print(f"{'with as end':-^85}")
+
+
 if __name__ == '__main__':
     pass
