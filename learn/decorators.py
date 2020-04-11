@@ -5,20 +5,11 @@ import time
     closure = cac function long nhau => nen dung decorators
     Khi cần định nghĩa một class chỉ với vài phương thức, closure có thể được sử dụng như một giải pháp thay thế nhẹ nhàng hơn lập trình hướng đối tượng. Tuy nhiên là khi các thuộc tính và phương thức nhiều lên, sử dụng lập trình hướng đối tượng sẽ là giải pháp tốt hơn.
 """
-# closure
-def make_multiplier_of(n):
-     def multiplier(x):
-         return x * n
-     return multiplier
 
 
 class Circle:
     def __init__(self, radius):
         self.__radius = radius
-
-    # khi có @property = getter, @radi.setter => khi call method obj.radi() phải khi thành attribute ->
-    #     obj.radi = 'phong' <=> obj._radius = 'phong'
-    #     có thể set attribute self._radius
 
     @property
     def area(self):
@@ -49,43 +40,6 @@ class Circle:
         return 3.1415926535
 
 
-def gen(n):
-    ls = []
-
-    for i in range(n):
-        ls.append(i**3)
-    return ls
-
-# yield, my_generator() = gen(),
-# my_generator(10) là 1 generator: print(list(my_generator(10))): phải có list mới in ra được or  trực tiếp vào for i in my_generator(10)
-# function: iter(str) = chuyen str ve iterable, next(str) = lap từng pt trong str
-
-
-def my_generator(n):
-    for i in range(n):
-        yield i**3
-
-
-def decorator(func):
-
-    def wrapper(*args, **kwargs):
-        print(f"Dang trong wrapper -> {args}")
-        full_name = args[0] + ' ' + args[1]
-        return func(full_name)
-
-    return wrapper
-
-
-@decorator
-def my_name(full_name):
-        return f"My name is {full_name}"
-NOTE = '''
-        khi goi my_name(param, ...) truyen tham so theo wrapper(...)
-        con trong wrapper thi func(full_name) = my_name(full_name) chi co
-        1 param
-'''
-
-
 class Pro(object):
 
     def __init__(self, age):
@@ -104,39 +58,6 @@ class Pro(object):
             self.__age = 0
         else:
             self.__age = old
-
-
-# paramater cho decorator
-def chuc_danh(job):
-    def function(func):
-        def wrapped(*args, **kwargs):
-            print("wrapped Dau")
-            print(f"chuc_danh: {job}")
-            print("wrapped cuoi")
-
-            fu = func(*args) ** 2
-            return fu
-
-        return wrapped
-
-    return function
-
-
-@chuc_danh('Doctor')
-def xuat_ten(*tup):
-    return random.choice(lis)
-
-
-def unifylist(l_input, l_target):
-    for it in l_input:
-        if isinstance(it, list):
-            unifylist(it, l_target)
-        elif isinstance(it, tuple):
-            unifylist(list(it), l_target)
-        else:
-            l_target.append(it)
-
-    return l_target
 
 
 def to_upper(func):
@@ -293,7 +214,6 @@ def decorator_age_two(func):
     return wrapped
 # param chac che hon chi nhan get_age(27) or get_age(age=27)
 # 
-
 
 
 @terminal # run #1 khong nen
