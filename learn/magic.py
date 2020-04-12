@@ -291,7 +291,7 @@ class Recursion(Special):
 
     def __del__(self):
         print("__del__")
-        del self # chi reing del self ko bi #RecursionError
+        del self # chi rieng del self ko bi #RecursionError
 
     def __str__(self):
         return str(self) #RecursionError
