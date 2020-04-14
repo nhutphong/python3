@@ -121,13 +121,6 @@ class Cat(Animal):
 # polymorphism calls class dog.speak() and meo.speak() => có cùng method() speak() polymorphism = gọi nhiều class có cùng tên method()
 
 
-class Tiger(Cat, Dog):
-    """docstring for Tiger"""
-
-    def __init__(self):
-        pass
-
-
 def polymorphism(dog, meo):
     for pet in [dog, meo]:
         print(type(pet))
@@ -330,6 +323,30 @@ class Square(object):
         return self
 
 
+class Car: 
+  
+    """Class for Car"""
+  
+    def __init__(self): 
+        self.name = "Car"
+  
+    def FourWheeler(self): 
+        return "FourWheeler"
+
+
+class Adapter: 
+  
+    def __init__(self, obj, **car_methods): 
+        # obj = Car(), **car_methods <=> wheeler = obj.FourWheeler
+        self.obj = obj
+        self.__dict__.update(car_methods) 
+  
+    def __getattr__(self, attr): 
+        
+        return getattr(self.obj, attr) #return self.obj.attr
+  
+    def original_dict(self): 
+        return self.obj.__dict__ 
 
 
 def main():
