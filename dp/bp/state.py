@@ -1,33 +1,35 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
+from dp.decorators import design
 
 
-class Context(ABC):
+class viewAbstract(ABC):
     """
-    The Context defines the interface of interest to clients. It also maintains
+    The view defines the interface of interest to clients. It also maintains
     a reference to an instance of a State subclass, which represents the current
-    state of the Context.
+    state of the view.
     """
 
     _state = None
     """
-    A reference to the current state of the Context.
+    A reference to the current state of the view.
     """
 
     def __init__(self, state: State) -> None:
         self.transition_to(state)
 
+    @design("transition_to")
     def transition_to(self, state: State):
         """
-        The Context allows changing the State object at runtime.
+        The view allows changing the State object at runtime.
         """
 
-        print(f"Context: Transition to {type(state).__name__}")
+        print(f"view: Transition to {type(state).__name__}")
         self._state = state
-        self._state.context = self
+        self._state.view = self#view
 
     """
-    The Context delegates part of its behavior to the current State object.
+    The view delegates part of its behavior to the current State object.
     """
 
     def request1(self):
@@ -40,18 +42,18 @@ class Context(ABC):
 class State(ABC):
     """
     The base State class declares methods that all Concrete State should
-    implement and also provides a backreference to the Context object,
+    implement and also provides a backreference to the view object,
     associated with the State. This backreference can be used by States to
-    transition the Context to another State.
+    transition the view to another State.
     """
 
     @property
-    def context(self) -> Context:
-        return self._context
+    def view(self) -> view:
+        return self._view
 
-    @context.setter
-    def context(self, context: Context) -> None:
-        self._context = context
+    @view.setter
+    def view(self, view: view) -> None:
+        self._view = view
 
     @abstractmethod
     def handle1(self) -> None:
@@ -64,33 +66,33 @@ class State(ABC):
 
 """
 Concrete States implement various behaviors, associated with a state of the
-Context.
+view.
 """
 
 
-class ConcreteStateA(State):
+class ProdutcState(State):
     def handle1(self) -> None:
-        print("ConcreteStateA handles request1.")
-        print("ConcreteStateA wants to change the state of the context.")
-        self.context.transition_to(ConcreteStateB())
+        print("ProdutcState handles request1.")
+        print("ProdutcState wants to change the state of the view.")
+        self.view.transition_to(HumanState())
 
     def handle2(self) -> None:
-        print("ConcreteStateA handles request2.")
+        print("ProdutcState handles request2.")
 
 
-class ConcreteStateB(State):
+class HumanState(State):
     def handle1(self) -> None:
-        print("ConcreteStateB handles request1.")
+        print("HumanState handles request1.")
 
     def handle2(self) -> None:
-        print("ConcreteStateB handles request2.")
-        print("ConcreteStateB wants to change the state of the context.")
-        self.context.transition_to(ConcreteStateA())
+        print("HumanState handles request2.")
+        print("HumanState wants to change the state of the view.")
+        self.view.transition_to(ProdutcState())
 
 
 if __name__ == "__main__":
     # The client code.
 
-    context = Context(ConcreteStateA())
-    context.request1()
-    context.request2()
+    view = viewAbstract(ProdutcState())
+    view.request1()
+    # view.request2()

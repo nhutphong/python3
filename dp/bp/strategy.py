@@ -3,17 +3,17 @@ from abc import ABC, abstractmethod
 from typing import List
 
 
-class Context():
+class View():
     """
-    context nhu control nhan vao data ConcreteStrategyA() call cac attr, method
-    context dung getter, setter nhan vao data moi ConcreteStrategyB() va call
-    xay dung context call data, moi lan call 1 data minh dua vao
+    view nhu control nhan vao data ProductStrategy() call cac attr, method
+    view dung getter, setter nhan vao data moi HumanStrategy() va call
+    xay dung view call data, moi lan call 1 data minh dua vao
 
     """
 
     def __init__(self, strategy: Strategy) -> None:
         """
-        strategy ban dau luc tao context(ConcreteStrategyA())
+        strategy ban dau luc tao view(ProductStrategy())
         """
         self._strategy = strategy
 
@@ -25,7 +25,7 @@ class Context():
     @strategy.setter
     def strategy(self, strategy: Strategy) -> None:
         """
-        context.strategy = ConcreteStrategyB() #gan 1 strategy moi
+        view.strategy = HumanStrategy() #gan 1 strategy moi
         """ 
         self._strategy = strategy
 
@@ -36,14 +36,14 @@ class Context():
 
         # ...
 
-        print("Context: Sorting data using the strategy (not sure how it'll do it)")
+        print("view: Sorting data using the strategy (not sure how it'll do it)")
         result = self._strategy.do_algorithm(["a", "b", "c", "d", "e"])
         print(",".join(result))
 
         # ...
 
 
-class Strategy(ABC):
+class StrategyAbstract(ABC):
     """
     
     """
@@ -53,23 +53,23 @@ class Strategy(ABC):
         pass
 
 
-class ConcreteStrategyA(Strategy):
+class ProductStrategy(StrategyAbstract):
     def do_algorithm(self, data: List) -> List:
         return sorted(data)
 
 
-class ConcreteStrategyB(Strategy):
+class HumanStrategy(StrategyAbstract):
     def do_algorithm(self, data: List) -> List:
         return reversed(sorted(data))
 
 
 if __name__ == "__main__":
   
-    context = Context(ConcreteStrategyA())
-    print("Client: Strategy is set to normal sorting.")
-    context.do_some_business_logic()
+    view = View(ProductStrategy())
+    print("Client: ProductStrategy is set to normal sorting.")
+    view.do_some_business_logic()
     print()
 
-    print("Client: Strategy is set to reverse sorting.")
-    context.strategy = ConcreteStrategyB()
-    context.do_some_business_logic()
+    print("Client: HumanStrategy is set to reverse sorting.")
+    view.strategy = HumanStrategy()
+    view.do_some_business_logic()
