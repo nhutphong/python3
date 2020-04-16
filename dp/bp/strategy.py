@@ -30,17 +30,10 @@ class View():
         self._strategy = strategy
 
     def do_some_business_logic(self) -> None:
-        """
-       
-        """
-
-        # ...
 
         print("view: Sorting data using the strategy (not sure how it'll do it)")
         result = self._strategy.do_algorithm(["a", "b", "c", "d", "e"])
         print(",".join(result))
-
-        # ...
 
 
 class StrategyAbstract(ABC):

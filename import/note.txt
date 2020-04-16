@@ -1,3 +1,7 @@
+neu file.py level CAP CAO thi khong dung relative_import .file or .. folder
+
+
+
 file __init__.py chi dung duoc relative_import
 absolute import: cho file .py binh thuong
 
@@ -6,7 +10,6 @@ __init__.py se run khi import toi subpackage chua no
 CUNG THU MUC CHI NEN DUNG ABSOLUTE IMPORT TRONG FILE IMPORT 
 cung folder run truc tiep tu folder chua file
 cu tu ten project toi moduleZ
-
 
 neu vua import file cung folder va file khac folder
 quan trong phai xac dinh folder project=folder_chung de import cho dung
