@@ -2,7 +2,7 @@ import sys
 import os
 from bp.state import *
 
-print(sys.path)
+# print(sys.path)
 
 
 #state.py

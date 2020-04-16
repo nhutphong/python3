@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 from utils.decorators import design
 
 
+@design("viewAbstract")
 class viewAbstract(ABC):
     """
    
@@ -62,6 +63,7 @@ class State(ABC):
 
 """
 
+@design("ProdutcState")
 class ProdutcState(State):
     def handle1(self) -> None:
         print("ProdutcState handles request1.")
