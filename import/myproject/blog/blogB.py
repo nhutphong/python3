@@ -1,9 +1,9 @@
 
 __all__ = ["yyy", "yyy2"]
 
-from .blogA import xxx
+from .blogA import xxx #.file
 from myproject.product.proA import zzz #cach1
-# from ..product.proA import zzz #cach2
+# from ..product.proA import zzz #cach2 <..> thay myproject
 
 def yyy():
 	print("tao al yyy() of blogB.py")
