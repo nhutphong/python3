@@ -3,10 +3,10 @@ from abc import ABC, abstractmethod
 from utils.decorators import design
 
 
-@design("viewAbstract")
 class viewAbstract(ABC):
     _state = None
 
+    @design("viewAbstract.__init__")
     def __init__(self, state: State) -> None:
         self.transition_to(state)
 

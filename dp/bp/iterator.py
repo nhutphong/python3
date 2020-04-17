@@ -4,28 +4,15 @@ from typing import Any, List
 
 
 """
-To create an iterator in Python, there are two abstract classes from the built-
-in `collections` module - Iterable,Iterator. We need to implement the
-`__iter__()` method in the iterated object (collection), and the `__next__ ()`
-method in theiterator.
 """
 
 
 class AlphabeticalOrderIterator(Iterator):
     """
-    Concrete Iterators implement various traversal algorithms. These classes
-    store the current traversal position at all times.
-    """
-
-    """
-    `_position` attribute stores the current traversal position. An iterator may
-    have a lot of other fields for storing iteration state, especially when it
-    is supposed to work with a particular kind of collection.
     """
     _position: int = None
 
     """
-    This attribute indicates the traversal direction.
     """
     _reverse: bool = False
 
@@ -36,8 +23,6 @@ class AlphabeticalOrderIterator(Iterator):
 
     def __next__(self):
         """
-        The __next__() method must return the next item in the sequence. On
-        reaching the end, and in subsequent calls, it must raise StopIteration.
         """
         try:
             value = self._collection[self._position]

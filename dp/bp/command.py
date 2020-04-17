@@ -4,7 +4,6 @@ from abc import ABC, abstractmethod
 
 class CommandAbstract(ABC):
     """
-    The Command interface declares a method for executing a command.
     """
 
     @abstractmethod
@@ -14,7 +13,6 @@ class CommandAbstract(ABC):
 
 class SimpleCommand(CommandAbstract):
     """
-    Some commands can implement simple operations on their own.
     """
 
     def __init__(self, payload: str) -> None:
