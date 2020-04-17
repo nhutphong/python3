@@ -4,11 +4,7 @@ from typing import Any
 
 
 class Builder(ABC):
-    """
-    The Builder interface specifies methods for creating the different parts of
-    the Product objects.
-    """
-
+    
     @abstractproperty
     def product(self) -> None:
         pass
@@ -26,15 +22,12 @@ class Builder(ABC):
         pass
 
 
-class ConcreteBuilder1(Builder):
+class Builder1(Builder):
     """
-   
+    builder control product
     """
 
     def __init__(self) -> None:
-        """
-        
-        """
         self.reset()
 
     def reset(self) -> None:
@@ -42,9 +35,6 @@ class ConcreteBuilder1(Builder):
 
     @property
     def product(self) -> Product1:
-        """
-       
-        """
         product = self._product
         self.reset()
         return product
@@ -60,10 +50,6 @@ class ConcreteBuilder1(Builder):
 
 
 class Product1():
-    """
-  
-    """
-
     def __init__(self) -> None:
         self.parts = []
 
@@ -76,7 +62,8 @@ class Product1():
 
 class Director:
     """
-    
+    director control builder
+    => director -> builder -> product
     """
 
     def __init__(self) -> None:
@@ -89,13 +76,9 @@ class Director:
     @builder.setter
     def builder(self, builder: Builder) -> None:
         """
-            director.builder = ConcreteBuilder1()
+            director.builder = Builder1()
         """
         self._builder = builder
-
-    """
-   
-    """
 
     def build_minimal_viable_product(self) -> None:
         self.builder.produce_part_a()
@@ -106,14 +89,14 @@ class Director:
         self.builder.produce_part_c()
 
 
-# Director call ConcreteBuilder1 call Product1
+# Director call Builder1 call Product1
 if __name__ == "__main__":
     """
     
     """
 
     director = Director()
-    builder = ConcreteBuilder1()
+    builder = Builder1()
     director.builder = builder
 
     print("Standard basic product: ")

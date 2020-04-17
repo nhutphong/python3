@@ -1,6 +1,21 @@
+
+
+
+"""
+nen xay dung cac abstractlass, no la khuon mau de ta iheritance xay dung cac class chua cac method=chuc nang da duoc qui dinh truoc
+
+cac class nen viet cac method trung ten nhau, tinh polymorphism
+de de quan ly va dung sau nay
+
+
+cac class co cac attrs la class khac thuong la view=control 
+adapter chua adaptee, adapter control adaptee
+
+
+"""
+
 class Target():
     """
-    The Target defines the domain-specific interface used by the client code.
     """
 
     def request(self) -> str:
@@ -9,9 +24,6 @@ class Target():
 
 class Adaptee:
     """
-    The Adaptee contains some useful behavior, but its interface is incompatible
-    with the existing client code. The Adaptee needs some adaptation before the
-    client code can use it.
     """
 
     def specific_request(self) -> str:
@@ -20,8 +32,6 @@ class Adaptee:
 
 class Adapter(Target):
     """
-    The Adapter makes the Adaptee's interface compatible with the Target's
-    interface.
     """
 
     def __init__(self, adaptee: Adaptee) -> None:
@@ -33,7 +43,6 @@ class Adapter(Target):
 
 def client_code(target: Target) -> None:
     """
-    The client code supports all classes that follow the Target interface.
     """
 
     print(target.request(), end="")

@@ -20,11 +20,8 @@ class SingletonMeta(type):
 class Singleton(metaclass=SingletonMeta):
     def some_business_logic(self):
         """
-        Finally, any singleton should define some business logic, which can be
-        executed on its instance.
+        chi co the tao 1 instance duy nhat trong suot chuong trinh
         """
-
-        # ...
 
 
 if __name__ == "__main__":

@@ -37,9 +37,6 @@ class View():
 
 
 class StrategyAbstract(ABC):
-    """
-    
-    """
 
     @abstractmethod
     def do_algorithm(self, data: List):
