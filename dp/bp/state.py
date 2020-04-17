@@ -17,9 +17,11 @@ class viewAbstract(ABC):
         self._state.view = self
         #self.view.transition_to(HumanState())
 
+    @design("view.request1")
     def request1(self):
         self._state.handle1()
 
+    @design("view.request2")
     def request2(self):
         self._state.handle2()
 
@@ -43,7 +45,7 @@ class State(ABC):
         pass
 
 
-@design("ProdutcState")
+@design("ProdutcState", letter='-')
 class ProdutcState(State):
     def handle1(self) -> None:
         print("ProdutcState handles request1.")
@@ -53,7 +55,7 @@ class ProdutcState(State):
     def handle2(self) -> None:
         print("ProdutcState handles request2.")
 
-
+@design("HumanState", letter='-')
 class HumanState(State):
     def handle1(self) -> None:
         print("HumanState handles request1.")

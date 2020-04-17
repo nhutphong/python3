@@ -8,3 +8,4 @@ from bp.state import *
 #state.py
 view = viewAbstract(ProdutcState())
 view.request1()
+view.request2()
