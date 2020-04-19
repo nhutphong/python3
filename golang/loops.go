@@ -23,7 +23,8 @@ func swap(a, b string) (string, string) {
 func split(sum int) (y, x int) {
 	x = sum * 4 / 9
 	y = sum - x
-	return
+    // return y, x 
+	return //nen ghi ro rang
 }
 
 func forloop1(stop int) int {
@@ -48,6 +49,16 @@ func forloop2(total int) int {
 	// vo tan ko co dk dung
 	// }
 }
+
+func forever(){
+    for {
+
+    }
+    // for {
+    // vo tan ko co dk dung
+    // }
+}
+
 
 func pownhut(x, n, lim float64) float64 {
 	if v := math.Pow(x, n); v < lim {
