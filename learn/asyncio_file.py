@@ -3,111 +3,41 @@ import time
 import asyncio
 import threading
 
+#-----------------------------------------------------------------------------#
+#nen dung tu python3.8 syntax don gian
 
-async def find_div(inrange, div_by):
-    print(f"start num range({inrange}) / {div_by}")
-    located = []
+async def numbers(number):
+    total = 0
+    for num in range(1, number+1):
+        await asyncio.sleep(.25)
+        print(f"{num} ", end='', flush=True)
+        total += num
 
-    for i in range(inrange):
-            if i % div_by == 0:
-                located.append(i)
-            elif i % 500000 == 0:
-               await asyncio.sleep(.0001)
-
-    print(f"done range({inrange}) / {div_by}")
-    return located
+    return total
 
 
-async def main():
-    await asyncio.wait([find_div(1008000, 350),
-                        find_div(2000800, 2000),
-                        find_div(350, 30)
-                ])
+async def alphabets(chars):
+    for char in chars:
+        await asyncio.sleep(.4)
+        print(f"{char} ", end='', flush=True)
+
+    return chars[::-1]
 
 
-async def say(what, when):
-    await asyncio.sleep(when)
-    print(what)
+async def run_async():
+    print(f"{'run_async END':-^85}")
+    #get_func1, get_func2 = await asyncio.gather(func1, func2, ...) 
+    number, alphabet = await asyncio.gather(numbers(5), alphabets('phong'))
+
+    print(f"\nnumbers: {number} - alphabets: {alphabet}")
+
+    print(f"\n{'run_async START':-^85}")
+
+asyncio.run(run_async())
+#-----------------------------------------------------------------------------#
 
 
-async def mot(stop=100):
-    print("Tao la 1111111")
 
-    for i in range(stop):
-        if i == 5:
-            await asyncio.sleep(4)
-
-    print('end 111111111')
-    return 'mot()'
-
-def thread_test(name='one',label='#', stop=30, delay=1):
-    print(f"{name} let go!!!")
-
-    for i in range(stop):
-        print(f'{name}: {i:{label}>20}')
-        time.sleep(delay)
-
-def thread_main():
-
-    r1 = threading.Thread(target=thread_test, args=('one','#',16,4))
-    r2 = threading.Thread(target=thread_test, args=('two','-',40,1))
-
-    r2.start()
-    r1.start()
-
-    threads = [r1, r2]
-    for r in threads:
-        r.join()
-
-    print('end threading')
-
-
-async def hello(name='one', label='-',delay=.25):
-    print(f"{name:}")
-
-    for i in range(21):
-        print(f"{name:{label}<{i}} {i}")
-        await asyncio.sleep(delay)
-
-
-def asyncio_main():
-    begin = time.time()
-
-    loop = asyncio.get_event_loop()
-
-    tasks = [asyncio.ensure_future(hello()), asyncio.ensure_future(hello('TWO','#', 1))]
-
-    loop.run_until_complete(asyncio.wait(tasks))
-    loop.close()
-
-    end = time.time()
-    print(f"microsecond : {end-begin}")
-    # loop.run_forever()
-
-COUNT = 0
-async def print_flush_true(text='phong',* , delay=.1):
-    global COUNT
-    COUNT+=1
-    print(f"thread = {COUNT:.>20}")
-    # flush=True => in tu tren xuong cho sleep xong roi in tiep
-    # flush=Flase => cho sleep xong roi moi in 1 luc tat ca
-    for c in text:
-        print(c, end='', flush=True)
-        await asyncio.sleep(delay)
-
-    print()
-
-async def print_async(text='phong',* , count=2, delay=.1):
-    tasks = []
-    for _ in range(count):
-        task = asyncio.create_task(print_flush_true(text, delay=delay))
-        tasks.append(task)
-
-    print(f"started at {time.strftime('%X')}") # '%X' => hh:mm:ss, '%x' => m/d/y
-    await asyncio.wait(tasks)
-    print(f"finished at {time.strftime('%X')}")
-
-#one create function coro
 async def say_after(delay, what):
     print(f"START {what} {delay:.>10}")
     await asyncio.sleep(delay)
@@ -120,7 +50,7 @@ async def say_after_main():
 
     print(f"started at {time.strftime('%X')}")
 
-    #two create tasks -> dung asyncio.gather, .wait co the bo buoc #two
+    #two create tasks -> dung asyncio.gather co the bo buoc #two
     # task1 = asyncio.create_task(say_after(5,'5'))
     # task2 = asyncio.create_task(say_after(3,'3'))
     # task4 = asyncio.create_task(say_after(7,'7'))
@@ -133,14 +63,15 @@ async def say_after_main():
     # await task2
     # await task4
 
-    # await asyncio.wait([say_after(9,'9'), say_after(7,'7'), say_after(3,'3')],) # run coro() co time bé nhất
     #three
     await asyncio.gather(say_after(9,'9'), say_after(3,'3'), say_after(7,'7'),)
 
     print(f"finished at {time.strftime('%X')}")
-# python 3.7
-
+# python 3.8
 # asyncio.run(say_after_main()) #three
+
+
+#=============================================================================#
 
 
 # python 3.6 va cu hon
@@ -162,6 +93,30 @@ def say_after_until():
 
     print(f"finished at {time.strftime('%X')}")
 # say_after_until()
+#=============================================================================#
+
+
+def thread_test(name='one',label='#', stop=30, delay=1):
+    print(f"{name} let go!!!")
+
+    for i in range(stop):
+        print(f'{name}: {i:{label}>20}')
+        time.sleep(delay)
+
+def thread_main():
+
+    r1 = threading.Thread(target=thread_test, args=('one','#',16,4))
+    r2 = threading.Thread(target=thread_test, args=('two','-',40,1))
+
+    r2.start()
+    r1.start()
+
+    threads = [r1, r2]
+    for r in threads:
+        r.join()
+
+    print('end threading')
+    
 
 if __name__ == '__main__':
     pass
