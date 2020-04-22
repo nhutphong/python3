@@ -2,10 +2,8 @@
 import time
 import asyncio
 import threading
-
 #-----------------------------------------------------------------------------#
 #nen dung tu python3.8 syntax don gian
-
 async def numbers(number):
     total = 0
     for num in range(1, number+1):
@@ -26,17 +24,20 @@ async def alphabets(chars):
 
 async def run_async():
     print(f"{'run_async END':-^85}")
-    #get_func1, get_func2 = await asyncio.gather(func1, func2, ...) 
+    # asyncio.gather(*coros) => *coros = so luong coros chinh
+    """ 
+    neu co 4 func trong gather(*coros)  thi co 4 coros chinh
+    se run tuan tu 4 coros truoc, sau do neu gap asyncio.sleep() thu 5 se chuyen toi coro truoc do, co asyncio.sleep() co thoi gian it nhat run tiep
+    """
     number, alphabet = await asyncio.gather(numbers(5), alphabets('phong'))
 
     print(f"\nnumbers: {number} - alphabets: {alphabet}")
 
     print(f"\n{'run_async START':-^85}")
+    return [number, alphabet]
 
 asyncio.run(run_async())
 #-----------------------------------------------------------------------------#
-
-
 
 async def say_after(delay, what):
     print(f"START {what} {delay:.>10}")
