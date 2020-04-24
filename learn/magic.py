@@ -403,38 +403,72 @@ class Iteration:
         return self.__dict__
 
     def __iter__(self):
-        self.x = 1
+        print("Iteration.__iter__")
+
+        # self.x = 1
         return self
 
     def __next__(self):
-        if self.x <= self.max:
-            val = 2 ** self.x
-            self.x += 1
+        print("Iteration.__next__")
+
+        if self.one <= self.max:
+            val = 2 ** self.one
+            self.one += 1
             return val
         else:
             raise StopIteration
+    """
+    iterator = Iteration(5)
+    iter(iterator) => run __iter__(self)
+    next(iterator) => run __next__(self)
+    next(iterator) 2,3,4,5 => run __next__(self) neu toi 6 se raise StopIteration
+
+
+    for iterator in Iteration(5):
+        print(iterator)
+    => dung for run __iter__ 1 lan va __next__ toi khong thoa dieu khien thi dung
+    """
 
 
 # Descriptor
 class NonNegativeDescriptor(object):
     def __init__(self, label):
+        print("NonNegativeDescriptor.__init__")
         self.label = label
 
     def __get__(self, instance, owner):
-        return f"{instance.__dict__.get(self.label)} \n{instance.program} \nself: {self} \ninstance: {instance} \nowner: {owner}"
+
+        """
+        self = NonNegativeDescriptor()
+        instance = Programmer('Thong', 30, 5_000, 4)
+        owner = Programmer
+        """
+
+        print("NonNegativeDescriptor.__get__(self, instance, owner):")
+
+        return f"{instance.__dict__[self.label]}"
 
     def __set__(self, instance, value):
+        print("NonNegativeDescriptor.__set__(self, instance, value):")
+
         if value > 0:
             instance.__dict__[self.label] = value
         else:
             raise ValueError(f"Negative value not allowed: {value}")
 
 
+print("IMPORTANT scope global file")
+
 class Programmer(object):
+    print(
+            "IMPORTANT trong class Programmer van run binh thuong  cung nhu la scope global file"
+        )
+
+    program = f"{'':*<10}class attribute"
+
     age = NonNegativeDescriptor('age')
     salary = NonNegativeDescriptor('salary')
     rating = NonNegativeDescriptor('rating')
-    program = f"{'':*<10}class attribute"
     # khi class attrs = descriptor trung ten instance attrs, thi se call class attr, default call instance attrs
 
     def __init__(self, name, age, salary, rating):
@@ -448,11 +482,13 @@ class Programmer(object):
 #metaclass
 class Iris(type):
     def __new__(cls, *args, **kwargs):
+        print(f"Tao la Iris.__new__")
         obj = super().__new__(cls, *args, **kwargs)
         obj.kingdom = 'Plantae'
         return obj
 
 # cac metaclass se run __new__() -> __init__() -> __call__() khi vua code xong class -> tuc la chua tao instance = Setosa()
+# khi co 4 class inheritance tu Iris thi run Iris.__new__ 4 lan
 class Setosa(metaclass=Iris):
     pass
 
@@ -460,6 +496,9 @@ class Virginica(metaclass=Iris):
     pass
 
 class Versicolor(metaclass=Iris):
+    pass
+
+class Four(metaclass=Iris):
     pass
 
 
