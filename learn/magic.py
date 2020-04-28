@@ -302,6 +302,7 @@ class Recursion(Magic):
     def __getattribute__(self, attr):
         print(f"__getattribute__ ")
         # recursion = self.attr # RecusionError
+        # value = super().__getattribute__(attr)
         return super().__getattribute__(attr)
 
 
@@ -397,10 +398,10 @@ class Iteration:
     def __repr__(self):
         return f"<Iteration(max={self.max})>"
 
-    def __getitem__(self, pos):
-        print(f"__getitem__ {pos.start} {pos.stop} {pos.step}")
+    def __getitem__(self, key):
+        print(f"__getitem__")
 
-        return self.__dict__
+        return self.__dict__[key]
 
     def __iter__(self):
         print("Iteration.__iter__")
@@ -489,6 +490,22 @@ class Iris(type):
 
 # cac metaclass se run __new__() -> __init__() -> __call__() khi vua code xong class -> tuc la chua tao instance = Setosa()
 # khi co 4 class inheritance tu Iris thi run Iris.__new__ 4 lan
+
+"""
+    co nhung magic method phai tra ve value cu the: vd
+    __init__(self,*args, **kwds): return None => ko return gi ca
+    __len__(self): return <int>
+    __str__(self): return <str>
+    __repr__(self): return <str>
+    __index__(self): return <int>
+    __index__: run khi bin(obj), int(obj), float(obj)
+
+   __new__(cls, *args, **kwargs): return <obj>
+    obj = super().__new__(cls, *args, **kwargs)
+    __new__ nen return obj nhung kho bat buoc
+
+
+"""
 class Setosa(metaclass=Iris):
     pass
 
