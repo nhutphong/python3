@@ -9,7 +9,7 @@ __IMPORTANT__="""
     __getattribute__(self, attr), __getattr__(self, attr),
     __setattr__(self, attr, value) thì phải chú ý
     khi tạo instance=class() thì run __init__()  gặp 10 attrs trong đó sẽ run __settatr__() 10 lần
-    còn trong các methods nếu truy cặp các self.attrs 10 lần sẽ call 10
+    còn trong các methods nếu truy cặp các self.attrs 10 lần sẽ call
     __getattribute__(self, attr) 10 lần
     vd self.name => run __getattribute__(self, attr)
         self.old => lai run __getattribute__(self, attr), ... blabla
@@ -38,7 +38,8 @@ __IMPORTANT__="""
 
     nói chung: value +value cộng bình thường
 
-    self+value, value < self, self + self sẽ run các Magic methods operators or comparisons tương ứng,
+    self+value, self + self sẽ run các Magic methods
+    value + self se run right Magic methods
 
     và còn những methods khác len(self), str(self), blabla, ... các built-in functions đều có Magic methods nếu ta định nghĩa nó khi tạo class, để run nó thì code func_name(self) trong các methods
 
@@ -383,17 +384,18 @@ class Recursion(Magic):
 
 
 class Iteration:
-    def __init__(self, max = 5):
-        self.max = max
-        self.one = 1
-        self.two = 2
-        self.three = 3
+    def __init__(self, start=0, stop=0, step=1):
+        self._start = start
 
-    def itself(self):
-        return self
+        if stop==0:
+            self._start, self._stop = stop, start
+        else:
+            self._stop = stop
+
+        self._step = step
 
     def __str__(self):
-        return f"<Iteration(max={self.max})>"
+        return f"<Iteration(start={self.start}, stop={self.stop}, step={self.step})>"
 
     def __repr__(self):
         return f"<Iteration(max={self.max})>"
@@ -404,21 +406,53 @@ class Iteration:
         return self.__dict__[key]
 
     def __iter__(self):
-        print("Iteration.__iter__")
+        print("__iter__")
 
         # self.x = 1
         return self
 
     def __next__(self):
-        print("Iteration.__next__")
+        print("__next__")
 
-        if self.one <= self.max:
-            val = 2 ** self.one
-            self.one += 1
-            return val
+        if self.start < self.stop:
+            value = self.start
+            self.start += self.step
+            return value
         else:
             raise StopIteration
-    """
+
+    @property
+    def start(self):
+        return self._start
+
+    @start.setter
+    def start(self, value):
+        self._start = value
+
+    @property
+    def stop(self):
+        return self._stop
+
+    @stop.setter
+    def stop(self, value):
+        self._stop = value
+
+    @property
+    def step(self):
+        return self._step
+
+    @step.setter
+    def step(self, value):
+        self._step = value
+
+    @property
+    def default(self):
+        self.start = 0
+        self.stop = 10
+        self.step =1
+        return self
+
+__ITERATOR__ = """
     iterator = Iteration(5)
     iter(iterator) => run __iter__(self)
     next(iterator) => run __next__(self)
@@ -428,7 +462,11 @@ class Iteration:
     for iterator in Iteration(5):
         print(iterator)
     => dung for run __iter__ 1 lan va __next__ toi khong thoa dieu khien thi dung
-    """
+
+    list(Iterator) or tuple(iterator) cung run __iter__ va __next__
+    list(Iteration(1,16,2)), tuple(Iteration(1,12,2))
+
+"""
 
 
 # Descriptor
@@ -490,8 +528,7 @@ class Iris(type):
 
 # cac metaclass se run __new__() -> __init__() -> __call__() khi vua code xong class -> tuc la chua tao instance = Setosa()
 # khi co 4 class inheritance tu Iris thi run Iris.__new__ 4 lan
-
-"""
+__MAGIC__= """
     co nhung magic method phai tra ve value cu the: vd
     __init__(self,*args, **kwds): return None => ko return gi ca
     __len__(self): return <int>
@@ -504,8 +541,8 @@ class Iris(type):
     obj = super().__new__(cls, *args, **kwargs)
     __new__ nen return obj nhung kho bat buoc
 
-
 """
+
 class Setosa(metaclass=Iris):
     pass
 
