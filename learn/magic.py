@@ -405,6 +405,12 @@ class Iteration:
 
         return self.__dict__[key]
 
+    def __contains__(self, item):
+        # item in iterator
+        # 'haha' in iterator
+        print("__contains__")
+        # return False #default
+
     def __iter__(self):
         print("__iter__")
 
@@ -467,55 +473,6 @@ __ITERATOR__ = """
     list(Iteration(1,16,2)), tuple(Iteration(1,12,2))
 
 """
-
-
-# Descriptor
-class NonNegativeDescriptor(object):
-    def __init__(self, label):
-        print("NonNegativeDescriptor.__init__")
-        self.label = label
-
-    def __get__(self, instance, owner):
-
-        """
-        self = NonNegativeDescriptor()
-        instance = Programmer('Thong', 30, 5_000, 4)
-        owner = Programmer
-        """
-
-        print("NonNegativeDescriptor.__get__(self, instance, owner):")
-
-        return f"{instance.__dict__[self.label]}"
-
-    def __set__(self, instance, value):
-        print("NonNegativeDescriptor.__set__(self, instance, value):")
-
-        if value > 0:
-            instance.__dict__[self.label] = value
-        else:
-            raise ValueError(f"Negative value not allowed: {value}")
-
-
-print("IMPORTANT scope global file")
-
-class Programmer(object):
-    print(
-            "IMPORTANT trong class Programmer van run binh thuong  cung nhu la scope global file"
-        )
-
-    program = f"{'':*<10}class attribute"
-
-    age = NonNegativeDescriptor('age')
-    salary = NonNegativeDescriptor('salary')
-    rating = NonNegativeDescriptor('rating')
-    # khi class attrs = descriptor trung ten instance attrs, thi se call class attr, default call instance attrs
-
-    def __init__(self, name, age, salary, rating):
-        self.name = name
-        self.age = age
-        self.salary = salary
-        self.rating = rating
-        self.program = f"{'':#<10}instance attribute trong __init__"
 
 
 #metaclass
