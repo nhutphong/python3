@@ -302,8 +302,9 @@ class Recursion(Magic):
 
     def __getattribute__(self, attr):
         print(f"__getattribute__ ")
-        # recursion = self.attr # RecusionError
+        # value = self.attr or getattr(self, attr) # RecusionError
         # value = super().__getattribute__(attr)
+        # value = object.__getattribute__(self, attr)
         return super().__getattribute__(attr)
 
 
