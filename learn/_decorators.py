@@ -2,66 +2,10 @@ import random
 import time
 from functools import wraps
 
-"""
-    closure = cac function long nhau => nen dung decorators
-    Khi cần định nghĩa một class chỉ với vài phương thức, closure có thể được sử dụng như một giải pháp thay thế nhẹ nhàng hơn lập trình hướng đối tượng. Tuy nhiên là khi các thuộc tính và phương thức nhiều lên, sử dụng lập trình hướng đối tượng sẽ là giải pháp tốt hơn.
-"""
-
-
-class Circle:
-    def __init__(self, radius):
-        self.__radius = radius
-
-    @property
-    def area(self):
-        """Calculate area inside circle"""
-        return self.pi() * self.__radius**2
-
-    def cylinder_volume(self, height):
-        """Calculate volume of cylinder with circle as base"""
-        return self.area * height
-
-    # khi co @classmethod co the doi self thanh ten tuy y
-    # Circle() = self = cls ...
-    @classmethod
-    def unit_circle(cls):
-        """Factory method creating a circle with radius 1"""
-        cls.obj_circle = cls(1)
-        return cls.obj_circle
-
-    @classmethod
-    def get_radi(cls):
-        cls.__radius = 10
-
-    # staticemethod nhu funciton() thông thường, khi gọi thông qua obj,
-    # có thể hiểu là tập hợp các function() có chức năng  mà class này hay dùng = clean code, nếu không thích có thể viết funtions() ra files(modules) khác và import vào
-    @staticmethod
-    def pi():
-        """Value of π, could use math.pi instead though"""
-        return 3.1415926535
-
-
-class Pro(object):
-
-    def __init__(self, age):
-        self.__age = age
-        # private variable
-        # p = Pro(25)
-        # print(p._Pro__age)
-
-    @property
-    def age(self):
-        return self.__age
-
-    @age.setter
-    def age(self, old):
-        if old < 0:
-            self.__age = 0
-        else:
-            self.__age = old
-
 
 def to_upper(func):
+    print("to_upper")
+    @wraps(func)
     def wrapped(*args, **kwargs):
         print("start to_upper lalalal")
         text = func(*args, **kwargs)
@@ -76,6 +20,8 @@ def to_upper(func):
 
 
 def to_join(func):
+    print("to_join")
+    @wraps(func)
     def wrapped(*args, **kwargs):
         print("start to_join HHHHHHH")
         text = func(*args, **kwargs)
@@ -87,8 +33,8 @@ def to_join(func):
     return wrapped
 
 
-@to_upper
-@to_join
+@to_upper #to_upper()
+@to_join #to_join()
 def dec_check(text='let goooo'):
     return text
 
@@ -97,11 +43,12 @@ class DecoratorClass:
     __IMPORTANT__ = """
         syntax cho decorator class
     """
+    print("Decoratorclass")
 
     def __init__(self, function):
-        print(f"__init__ start {type(self).__name__}") 
+        print(f"DecoratorClass.__init__ start {type(self).__name__}") 
         self.function = function 
-        print(f"__init__ end {type(self).__name__}")
+        print(f"DecoratorClass.__init__ end {type(self).__name__}")
       
     def __call__(self, *args, **kwargs): 
         print("__call__ start")
@@ -114,8 +61,8 @@ class DecoratorClass:
         # after function call. 
         print("__call__ end")
   
-# adding decorator to the class  
-@DecoratorClass #autorun DecoratorClass.__init__() truoc khi goi functions()
+
+@DecoratorClass  # @DecoratorClass = DecoratorClass()
 def function(first_name='phong', message ='Hello', last_name='nhut'): 
     print(f"{message}, {first_name} {last_name}")
 
@@ -157,10 +104,11 @@ def get_name(**kwargs):
 
 #cach 2
 def design(*args, **kwargs):
+    print("design")
     def wrapped(func):
-        print('Tao la wrapped START')
+        print('Tao la design.wrapped START')
         func()
-        print('Tao la wrapped END')
+        print('Tao la design.wrapped END')
         context = dict(
             username=kwargs['username'], 
             password=kwargs['password']
@@ -169,10 +117,10 @@ def design(*args, **kwargs):
 
     return wrapped
 
-@design(username='phong', password=12345)
+@design(username='phong', password=12345) 
+#run design(), wrapper() va created variable show = context
 def show(**kwargs):
     print('ban da logged')
-# auto variable show = context
 
 
 # params for decorator
@@ -191,8 +139,8 @@ def terminal(letter='#'): #1
     return function
 
 
-# @terminal # run #1 khong nen
-@terminal() #run #1 va #2 decorator co param nen dung
+# @terminal # chi run #1 terminal() khong nen
+@terminal(letter='$') #run1 terminal() va run2 function() ,co param nen dung
 def get_age(age):
     """Docstring get_age"""
     print('Tao la get_age')
@@ -225,7 +173,7 @@ def register(func):
     return wrapped
 
 
-@register
+@register #run register()
 def get_user(username, password):
     return dict(username=username, password=password)
 
@@ -248,9 +196,9 @@ def time_run(func, *args, **kwargs):
     end = time.time()
     return end-start
 
-duration = time_run(find_password, 'dung', '123456', ['dung', '123456'])
+# duration = time_run(find_password, 'dung', '123456', ['dung', '123456'])
 
-print(f"{duration:,.6f}")
+# print(f"{duration:,.6f}")
 
 
 def main():

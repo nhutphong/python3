@@ -42,8 +42,6 @@ __IMPORTANT__="""
     value + self se run right Magic methods
 
     và còn những methods khác len(self), str(self), blabla, ... các built-in functions đều có Magic methods nếu ta định nghĩa nó khi tạo class, để run nó thì code func_name(self) trong các methods
-
-code self[pos] -> run __getitem__(self, pos)
 """
 
 def design(func_name=None, letter='#'):
@@ -60,86 +58,92 @@ def design(func_name=None, letter='#'):
 
 
 class Magic:
-    """Tao la Magic class"""
+    print("""Tao la Magic class""")
     __number = 0
     __string = ''
     count_init = 0
     count_setattr = 0
     count_getattr = 0
     count_getattribute = 0
-    count_str = 0
+    count_name = 0
     # child_class ko thể access, classs variable private cua parent_class,
     # chỉ có thể dùng publish method của parrent_class để truy cập
     # neu la class variable publish thi access binh thuong child_class.count_init, child_class.count_getattr, ...
 
     @design("__init__")
-    def __init__(self, *, number=10, intdf=5, strdf='phong', listdf=[]):
+    def __init__(self, *, number=10, intdf=5, name='phong', listdf=[]):
         Magic.count_init += 1
         print(f"Tao la __init__ {Magic.count_init}")
-        self.__len = number # _Magic__len
-        self.__str = strdf  # _Magic__str
-        self.__list = listdf # _Magic__list
+        self._number = number
+        self._name = name
+        self.__list = listdf
         self.__int = intdf # _Magic__int
         # child_class có thể access self._Magic__int, syntax đặc biệt
         #
 
-
-    # khi len(self) => run:  __len__(self)
+    # magic = Magic()
+    # len(magic)
     @design("__len__")
     def __len__(self):
         print('__len__')
-        return self.__len  # self__len = int (bat buoc)
-    # khi print(obj) or str(obj) or obj.__str__() => run __str__(self) = self.__str
+        return self._number # return <int> bat buoc
+    
+    #print(magic) or str(magic)
     @design("__str__")
     def __str__(self):
-        Magic.count_str += 1
-        print(f"__str__ {Magic.count_str}")
-        return self.__str  # self__str = str bat buoc
-
+        Magic.count_name += 1
+        print(f"__str__ {Magic.count_name}")
+        return self.name  # return <str> bat buoc
+    
+    #repr(magic) or magic<trong terminal>
     @design("__repr__")
     def __repr__(self):
         print("__repr__")
-        return f"<enter> run __repr__ = {self.__str}"  # dung repr(obj)
-
+        return f"<enter> run __repr__ = {self.name}"  # dung repr(obj)
+    
+    #magic['key'] = 'value'
     @design("__setitem__")
     def __setitem__(self, key, value):
         print('__setitem__')
         # self[key] = value
         self.__dict__[key] = value
-
+    
+    #magic[key]
     @design("__getitem__")
     def __getitem__(self, key):
         print("__getitem__")
-        # self[::], self[index] #RecursionError
+        # self[index] #RecursionError
         return self.__dict__[key]
 
+    #del magic[key]
     @design("__delitem__")
     def __delitem__(self, key):
         # del self[key]
         print('__delitem__')
         del self.__dict__[key]
 
+    #magic.name
     @design("__getattribute__")
     def __getattribute__(self, attr): #3
         # self.attr ton tai
         Magic.count_getattribute += 1
-        print(f'<{attr}> ton tai nen run __getattribute__ {Magic.count_getattribute}')
+        print(f'<{attr}> LUON RUN  __getattribute__ {Magic.count_getattribute}')
         # super().__getattribute__(attr) # run __getattr__(self, attr) #2
         # object.__getattribute__(self,attr) #2
         return object.__getattribute__(self,attr)
-        #super() | object.__getattribute__(self, attr) return VALUE neu self.attr ton tai, else run __getattr(self, attr) 1 lan duy nhat
-        #
+        #super() | object.__getattribute__(self, attr) return VALUE neu self.attr ton tai, else run __getattr__(self, attr) 1 lan duy nhat
 
     @design("__getattr__")
     def __getattr__(self, attr): #2
         # self.old -> run 1 lan khi self.old khong ton tai
         Magic.count_getattr += 1
-        print(f'<{attr}> NONO ton tai nen run __getattr__ {Magic.count_getattr} <{attr}>')
+        print(f'<{attr}> khong toan tai __getattr__ {Magic.count_getattr} <{attr}>')
 
         value = 'invalid'
         setattr(self, attr, value)
         return value
 
+    #magic.old = 25
     @design("__setattr__")
     def __setattr__(self, attr, value): #1
         # khi tao obj neu co 4 attr se run 4 lan __setattr__
@@ -152,22 +156,30 @@ class Magic:
         else:
             print(f"<{attr}> {'':.<20}{value}", end='\n'*2)
 
+    #del magic.name
     @design("__delattr__")
     def __delattr__(self, attr):
         # del self.attr
         print('__delattr__')
         del self.__dict__[attr]
 
+    #del magic
     @design("__del__")
     def __del__(self):
         #del self
         print("__del__")
+        del self #NO RecursionError
 
+    """ magic + value
+        magic + magic_two
+        magic.__add__(magic_two or value)
+    """
     def __add__(self, other):
         print('tao la __add__+')
 
         return Magic(intdf=self.__int + other.__int)
-        # return self.__str + other.__str
+        # return self._name + other._name
+
 
     def __sub__(self, other):
         print('tao la __sub__-')
@@ -243,39 +255,27 @@ class Magic:
     # __hex__() = hex()
 
     @property
-    def _len(self):
-        return self.__len
+    def len(self):
+        return self._number
 
-    @_len.setter
-    def _len(self, value):
+    @len.setter
+    def len(self, value):
 
         if isinstance(value, int):
-            self.__len = value*2
+            self._number = value*2
         else:
-            self.__len = Magic.__number
+            self._number = Magic.__number
 
     @property
-    def _str(self):
-        return self.__str
+    def name(self):
+        return self._name
 
-    @_str.setter
-    def _str(self, value):
+    @name.setter
+    def name(self, value):
         if isinstance(value, str):
-            self.__str = value.upper()
+            self._name = value.upper()
         else:
-            self.__str = Magic.__string
-
-
-class ChildMagic(Magic):
-    """docstring for ChildMagic"""
-    def __init__(self):
-        super().__init__()
-
-    def __str__(self):
-        return str(self) # recursion vo tan call itself
-
-    def __len__(self):
-        return len(self) # recursion vo tan call itself
+            self._name = Magic.__string
 
 
 class Recursion(Magic):
