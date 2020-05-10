@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
 import random
 import time
 
@@ -45,7 +51,7 @@ class Descriptor(object):
         if value > 0:
             instance.__dict__[self.name] = value
         else:
-            raise ValueError(f"Negative value not allowed: {value}")
+            raise ValueError(f"value > 0 OK: {value}")
 
     # run khi <del programer.age> => khi xoa class.attr
     def __delete__(self, instance):
@@ -60,9 +66,9 @@ class Programmer(object):
 
     program = f"{'':*<10}class attribute"
 
-    age = Descriptor()
-    salary = Descriptor()
-    rating = Descriptor()
+    age = Descriptor()    #run __set_name__(self, owner, name)
+    salary = Descriptor() #run __set_name__(self, owner, name)
+    rating = Descriptor() #run __set_name__(self, owner, name)
     # khi class attrs = descriptor trung ten instance attrs, thi se call class attr, default call instance attrs
 
     def __init__(self, age, salary, rating):
@@ -72,6 +78,9 @@ class Programmer(object):
         self.program = f"{'':#<10}instance attribute trong __init__"
 
 
+# In[2]:
+
+
 print(f"{'LazyProperty':-^85}")
 
 class LazyProperty:
@@ -79,13 +88,14 @@ class LazyProperty:
         print("LazyProperty.__init__")
 
         self.function = function
-        self.name = function.__name__
+        self.funcname = function.__name__
 
     def __get__(self, instance, owner=None) -> object:
         print("LazyProperty.__get__")
 
-        instance.__dict__[self.name] = self.function(instance)
-        return instance.__dict__[self.name]
+        instance.__dict__[self.funcname] = self.function(instance)
+        # deepthought.meaning_of_life = meaning_of_life(instance)=42
+        return instance.__dict__[self.funcname]
 
     # def __set__(self, instance, value):
     #     pass
@@ -111,7 +121,9 @@ print(deepthought.meaning_of_life)
 print(vars(deepthought))
 
 
-print()
+# In[3]:
+
+
 print(f"{'EvenNumber':-^85}")
 
 class EvenNumber:
@@ -141,3 +153,4 @@ my_values.value1 = 1
 my_values.value2 = 4
 print(my_values.value1)
 print(my_values.value2)
+

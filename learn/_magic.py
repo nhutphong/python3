@@ -15,13 +15,6 @@ __IMPORTANT__="""
         self.old => lai run __getattribute__(self, attr), ... blabla
     phải chú ý __getattribute__(self, attr)
 
-    trong magic_method ko được dung syntax của nó để call chính nó
-    : __len__(self): ko được len(self)
-    : __ge__(self, other): ko được self >= other
-    blabla..., ...
-
-    self, super().func(no self) => class()=object.func(have a self)
-    value = int, str
     khi tao cac Magic method neu gap cac syntax trong code or ngay return:
     self + value thi se call them __add__
     value + self thi se call them __radd__
@@ -40,8 +33,6 @@ __IMPORTANT__="""
 
     self+value, self + self sẽ run các Magic methods
     value + self se run right Magic methods
-
-    và còn những methods khác len(self), str(self), blabla, ... các built-in functions đều có Magic methods nếu ta định nghĩa nó khi tạo class, để run nó thì code func_name(self) trong các methods
 """
 
 def design(func_name=None, letter='#'):
@@ -66,21 +57,16 @@ class Magic:
     count_getattr = 0
     count_getattribute = 0
     count_name = 0
-    # child_class ko thể access, classs variable private cua parent_class,
-    # chỉ có thể dùng publish method của parrent_class để truy cập
-    # neu la class variable publish thi access binh thuong child_class.count_init, child_class.count_getattr, ...
+
 
     @design("__init__")
-    def __init__(self, *, number=10, intdf=5, name='phong', listdf=[]):
+    def __init__(self, *, number=10, intdf=5, name='phong'):
         Magic.count_init += 1
         print(f"Tao la __init__ {Magic.count_init}")
         self._number = number
         self._name = name
-        self.__list = listdf
         self.__int = intdf # _Magic__int
-        # child_class có thể access self._Magic__int, syntax đặc biệt
-        #
-
+       
     # magic = Magic()
     # len(magic)
     @design("__len__")
@@ -501,16 +487,16 @@ __MAGIC__= """
 
 """
 
-class Setosa(metaclass=Iris):
+class Setosa(metaclass=Iris):     #run Iris.__new__(cls, *args, **kwargs) 1
     pass
 
-class Virginica(metaclass=Iris):
+class Virginica(metaclass=Iris):  #run Iris.__new__(cls, *args, **kwargs) 2
     pass
 
-class Versicolor(metaclass=Iris):
+class Versicolor(metaclass=Iris): #run Iris.__new__(cls, *args, **kwargs) 3
     pass
 
-class Four(metaclass=Iris):
+class Four(metaclass=Iris):       #run Iris.__new__(cls, *args, **kwargs) 4
     pass
 
 
