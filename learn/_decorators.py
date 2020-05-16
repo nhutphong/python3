@@ -1,42 +1,62 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
 import random
 import time
 from functools import wraps
+import inspect
 
 
 def to_upper(func):
     print("to_upper")
-    @wraps(func)
-    def wrapped(*args, **kwargs):
+    @wraps(func) #add __wrapper__() => de unwrap,  func.__wrapper__(**kwds) <=> inspect.unwrap(func)(**kwds)
+    def wrapper(*args, **kwargs):
         print("start to_upper lalalal")
         text = func(*args, **kwargs)
         print("end to_upper lalala")
 
-        if not isinstance(text, str):
-            raise TypeError("deo phai string")
-
         return text.upper()
 
-    return wrapped
+    return wrapper
 
 
 def to_join(func):
     print("to_join")
-    @wraps(func)
-    def wrapped(*args, **kwargs):
+    @wraps(func) #add __wrapper__()
+    def wrapper(*args, **kwargs):
         print("start to_join HHHHHHH")
-        text = func(*args, **kwargs)
+        names = func(*args, **kwargs)
         print("end to_join HHHHHH")
-        result = ' '.join([text, 'thanh phong'])
+        result = ' '.join(names)
 
         return result
 
-    return wrapped
+    return wrapper
 
 
 @to_upper #to_upper()
 @to_join #to_join()
-def dec_check(text='let goooo'):
-    return text
+def get_names(names):
+    print("Tao la get_names")
+    return names
+print()
+
+print(f"{get_names.__name__ = }")
+print(f"{get_names(['dung', 'thong', 'cau'])}")
+print()
+print(f"{get_names.__wrapper__(['cau', 'dung', 'thong', 'heo']) = }")
+print()
+print("co bao nhieu decorator thi .__wrapper__ bay nhieu lan")
+print(f"{get_names.__wrapper__.__wrapper__(['cau', 'dung', 'thong', 'heo']) = }")
+print()
+print("nen dung inspect.unwrap bo tat ca decorator")
+print(f"{inspect.unwrap(get_names)(['cau', 'dung', 'thong', 'heo']) = }")
+
+
+# In[2]:
 
 
 class DecoratorClass: 
@@ -44,8 +64,9 @@ class DecoratorClass:
         syntax cho decorator class
     """
     print("Decoratorclass")
+    print('------------------------------------------------------------------------')
 
-    def __init__(self, function):
+    def __init__(self, function): #chi 1 param la function bat buoc
         print(f"DecoratorClass.__init__ start {type(self).__name__}") 
         self.function = function 
         print(f"DecoratorClass.__init__ end {type(self).__name__}")
@@ -55,16 +76,26 @@ class DecoratorClass:
         # We can add some code  
         # before function call 
         
-        self.function(*args, **kwargs) 
+        value = self.function(*args, **kwargs) 
   
         # We can also add some code 
         # after function call. 
         print("__call__ end")
+        
+        return value
   
 
-@DecoratorClass  # @DecoratorClass = DecoratorClass()
-def function(first_name='phong', message ='Hello', last_name='nhut'): 
-    print(f"{message}, {first_name} {last_name}")
+@DecoratorClass  # function = @DecoratorClass = DecoratorClass(function)
+def function(first_name='dung', last_name='thong', /, **kwds): 
+    return dict(first_name=first_name, last_name=last_name, **kwds)
+print()
+
+print(f"{function() = }  <__call__()>")
+print()
+print(f"{function.function() = } <self.function()>")
+
+
+# In[3]:
 
 
 def format_python(name='phong', letter='#'):
@@ -73,30 +104,30 @@ def format_python(name='phong', letter='#'):
 
 def format_one(func):
     @wraps(func)
-    def wrapped(*args, **kwargs):
+    def wrapper(*args, **kwargs):
         print(f"{kwargs['start']:{kwargs['letter']}^50}")
         fun = func(**kwargs)
         print(f"{kwargs['end']:{kwargs['letter']}^50}")
         return fun
 
-    return wrapped
+    return wrapper
 
 
 def format_two(*args, **kwargs):
-    def wrapped(func):
+    def wrapper(func):
         print(f"{kwargs['start']:{kwargs['letter']}^50}")
         fun = func(**kwargs)
         print(f"{kwargs['end']:{kwargs['letter']}^50}")
         return fun
 
-    return wrapped
+    return wrapper
 
 
 # @format_two(start='NHUT', end='PHONG', letter='#') #cach 2 auto get_name()
 # cach 2 va tao variable get_name = return fun = data=kwargs=dict 
 
 @format_one #cach 1
-# khi get_name(blalba, ...) se run wrapped(*args, **kwargs)
+# khi get_name(blalba, ...) se run wrapper(*args, **kwargs)
 def get_name(**kwargs):
     return kwargs
 # get_name(start='NHUT', end='PHONG', letter='#') #cach 1 
@@ -105,22 +136,24 @@ def get_name(**kwargs):
 #cach 2
 def design(*args, **kwargs):
     print("design")
-    def wrapped(func):
-        print('Tao la design.wrapped START')
+    def wrapper(func):
+        print('Tao la design.wrapper START')
         func()
-        print('Tao la design.wrapped END')
+        print('Tao la design.wrapper END')
         context = dict(
             username=kwargs['username'], 
             password=kwargs['password']
             )
         return context
 
-    return wrapped
+    return wrapper
 
 @design(username='phong', password=12345) 
 #run design(), wrapper() va created variable show = context
 def show(**kwargs):
     print('ban da logged')
+print(f"{show = }")
+print()
 
 
 # params for decorator
@@ -129,13 +162,13 @@ def terminal(letter='#'): #1
 
     def function(func): #2
         print("Tao la function")
-
-        def wrapped(*args, **kwargs): #3
-            print(f"{'wrapped START ':{letter}^85}")
+        @wraps(func)
+        def wrapper(*args, **kwargs): #3
+            print(f"{'wrapper START ':{letter}^85}")
             fun = func(*args, **kwargs)
-            print(f"{'wrapped END ':{letter}^85}", end='\n'*2)
+            print(f"{'wrapper END ':{letter}^85}", end='\n'*2)
             return fun
-        return wrapped
+        return wrapper
     return function
 
 
@@ -146,16 +179,20 @@ def get_age(age):
     print('Tao la get_age')
     return age
 
-print(get_age(age=27)) #run #3 wrapped(*args, **kwargs) kwargs{age=27} thuoc ve wrapped, chu khong phai thuoc ve get_age()
+print(get_age(age=27)) #run #3 wrapper(*args, **kwargs) kwargs{age=27} thuoc ve wrapper, 
+#chu khong phai thuoc ve get_age()
+
+
+# In[4]:
 
 
 def register(func):
     print("Tao la register")
 
     @wraps(func)
-    def wrapped(username, password, *args, **kwargs):
+    def wrapper(username, password, *args, **kwargs):
         # print(f"SWAP-START")
-        # print(f"wrapped haha")
+        # print(f"wrapper haha")
         # fun = func(*args, **kwargs)
 
         name_to_list = [n for n in username]
@@ -170,7 +207,7 @@ def register(func):
         # print(f"SWAP-END")
         return fun
 
-    return wrapped
+    return wrapper
 
 
 @register #run register()
