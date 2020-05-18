@@ -1,36 +1,54 @@
 from __future__ import annotations
 from typing import Optional
 
-
 class SingletonMeta(type):
-    """
-    The Singleton class can be implemented in different ways in Python. Some
-    possible methods include: base class, decorator, metaclass. We will use the
-    metaclass because it is best suited for this purpose.
-    """
 
     _instance: Optional[Singleton] = None
+    def __new__(cls, *args, **kwds): 
+        print("Tao la SingletonMeta.__new__")
+        # print(f"{cls = }\n{clsname = }\n{bases = }\n{attrs = }")
 
-    def __call__(self) -> Singleton:
-        if self._instance is None:
-            self._instance = super().__call__()
-        return self._instance
+        instance = super().__new__(cls, *args, **kwds)
+        instance._country = 'viet nam'
+        instance._city = 'dong nai'
+
+        return  instance
+
+    # type.__call__(cls) return obj
+    def __call__(cls) -> Singleton:
+        print('tao la SingletonMeta.__call__ ')
+        print(f"{cls = }")
+        print(f"{cls._instance = }")
+
+        if cls._instance is None:
+            cls._instance = super().__call__() # = Singleton()
+
+        return cls._instance
 
 
 class Singleton(metaclass=SingletonMeta):
     def some_business_logic(self):
-        """
-        chi co the tao 1 instance duy nhat trong suot chuong trinh
-        """
+        print(f"{self = }")
 
 
-if __name__ == "__main__":
-    # The client code.
+class Base:
 
-    s1 = Singleton()
-    s2 = Singleton()
+    note = """
+        base = Base('dung', 28)
+        run __new__ roi toi __init__
+        __
+    """
+    def __new__(cls): 
+        print("Tao la Base.__new__")
+        print(f"{cls = }")
 
-    if id(s1) == id(s2):
-        print("Singleton works, both variables contain the same instance.")
-    else:
-        print("Singleton failed, variables contain different instances.")
+        self = super().__new__(cls)
+        self._country = 'VIET NAM' #instance attr chung cho tat ca instances
+        print(f"{self = }")
+
+        return self #bat buoc doi call __init__
+
+    def __init__(self, name, old):
+        print('Tao la Base.__init__')
+        self._name = name
+        self._old = old
