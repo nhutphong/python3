@@ -72,10 +72,20 @@ class Programmer(object):
     # khi class attrs = descriptor trung ten instance attrs, thi se call class attr, default call instance attrs
 
     def __init__(self, age, salary, rating):
-        self.age = age
-        self.salary = salary
-        self.rating = rating
+        self.age = age       #run Descriptor.__set__(self, instance, value):
+        self.salary = salary #run Descriptor.__set__(self, instance, value):
+        self.rating = rating #run Descriptor.__set__(self, instance, value):
+        
         self.program = f"{'':#<10}instance attribute trong __init__"
+
+print()
+
+pro = Programmer(28, 5000, 10) #run Descriptor.__set__(self, instance, value): 3 lan
+print()
+print(f"{pro.age = }") #run Descriptor.__get__(self, instance, owner):
+
+print()
+print(f"{pro.salary = }")
 
 
 # In[2]:
@@ -102,12 +112,12 @@ class LazyProperty:
 
 class DeepThought:
 
-    @LazyProperty # <=> @property
-    def meaning_of_life(self):
+    @LazyProperty
+    def meaning_of_life(self): # run LazyProperty.__get__
         time.sleep(3)
         return 42
 
-    #deepthought.meaning_of_life lan dau se run func()
+    #deepthought.meaning_of_life lan dau se run run LazyProperty.__get__
     #deepthought.meaning_of_life lan sau chi lay value=42 tu __dict__
     #voi dieu kien ko co khai bao __set__
     
@@ -133,24 +143,28 @@ class EvenNumber:
         self.name = name
 
     def __get__(self, instance, owner=None) -> object:
+        print("EvenNumber.__get__")
         return instance.__dict__.get(self.name) or 0
 
     def __set__(self, instance, value) -> None:
+        print("EvenNumer.__set__")
         instance.__dict__[self.name] = (value if value % 2 == 0 else 0)
 
 class Values:
-    value1 = EvenNumber()
-    value2 = EvenNumber()
-    value3 = EvenNumber()
+    value1 = EvenNumber() #run EvenNumber.__set_name__
+    value2 = EvenNumber() #run EvenNumber.__set_name__
+    value3 = EvenNumber() #run EvenNumber.__set_name__
     """
         khai bao __get__, __set__ cung nhu getter va setter, nhung dung cho
         class attributes.
         avoid lap lai code DRY = tranh tao qua nhieu getter setter voi cung type value
     """
 
-my_values = Values()
+my_values = Values() 
+print()
 my_values.value1 = 1
 my_values.value2 = 4
-print(my_values.value1)
-print(my_values.value2)
+print()
+print(f"{my_values.value1 = }")
+print(f"{my_values.value2 = }")
 

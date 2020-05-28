@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
 """
     DATA MODEL, BASIC CUTOMIZATION
     Magic method
@@ -118,10 +124,10 @@ class Magic:
         # object.__getattribute__(self,attr) #2
         return object.__getattribute__(self,attr)
         #super() | object.__getattribute__(self, attr) return VALUE neu self.attr ton tai, else run __getattr__(self, attr) 1 lan duy nhat
-
+    
+    #magic.old kho ton tai se run 1 lan
     @design("__getattr__")
     def __getattr__(self, attr): #2
-        # self.old -> run 1 lan khi self.old khong ton tai
         Magic.count_getattr += 1
         print(f'<{attr}> khong toan tai __getattr__ {Magic.count_getattr} <{attr}>')
 
@@ -264,6 +270,9 @@ class Magic:
             self._name = Magic.__string
 
 
+# In[2]:
+
+
 class Recursion(Magic):
     """docstring for Recursion"""
     __IMPORTANT__ = """
@@ -370,6 +379,9 @@ class Recursion(Magic):
         return self >> other #RecursionError
 
 
+# In[3]:
+
+
 class Iteration:
     def __init__(self, start=0, stop=0, step=1):
         self._start = start
@@ -461,44 +473,3 @@ __ITERATOR__ = """
 
 """
 
-
-#metaclass
-class Iris(type):
-    def __new__(cls, *args, **kwargs):
-        print(f"Tao la Iris.__new__")
-        obj = super().__new__(cls, *args, **kwargs)
-        obj.kingdom = 'Plantae'
-        return obj
-
-# cac metaclass se run __new__() -> __init__() -> __call__() khi vua code xong class -> tuc la chua tao instance = Setosa()
-# khi co 4 class inheritance tu Iris thi run Iris.__new__ 4 lan
-__MAGIC__= """
-    co nhung magic method phai tra ve value cu the: vd
-    __init__(self,*args, **kwds): return None => ko return gi ca
-    __len__(self): return <int>
-    __str__(self): return <str>
-    __repr__(self): return <str>
-    __index__(self): return <int>
-    __index__: run khi bin(obj), int(obj), float(obj)
-
-   __new__(cls, *args, **kwargs): return <obj>
-    obj = super().__new__(cls, *args, **kwargs)
-    __new__ nen return obj nhung kho bat buoc
-
-"""
-
-class Setosa(metaclass=Iris):     #run Iris.__new__(cls, *args, **kwargs) 1
-    pass
-
-class Virginica(metaclass=Iris):  #run Iris.__new__(cls, *args, **kwargs) 2
-    pass
-
-class Versicolor(metaclass=Iris): #run Iris.__new__(cls, *args, **kwargs) 3
-    pass
-
-class Four(metaclass=Iris):       #run Iris.__new__(cls, *args, **kwargs) 4
-    pass
-
-
-if __name__ == '__main__':
-    pass
