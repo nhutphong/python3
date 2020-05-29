@@ -1,9 +1,64 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
+important = """
+    def action(func):
+    
+        @functools.wraps(func)
+        def wrapper(*args, **kwds):
+            return func(*args, **kwds)
+        return wrapper
+        
+    @action
+    def my_func():
+    
+    my_func = action(myfunc) #return action = wrapper 
+
+    
+    def action(param1, param2):
+    
+        def decorator(func):
+        
+            @functools.wraps(func)
+            def wrapper(*args, **kwds):
+                return func(*args, **kwds)
+                
+            return wrapper
+            
+        return decorator
+        
+    @action(param1, param2)
+    def my_func():
+    
+    my_func = action(param1, param2)(my_func) #return decorator = wrapper
+    
+    
+    def dataclass(cls=None, /, *, init=True, repr=True, eq=True, order=False,
+              unsafe_hash=False, frozen=False):
+
+        def wrapper(cls):
+            return _process_class(cls, init, repr, eq, order, unsafe_hash, frozen)
+
+        if cls is None: # @dataclass(...) = detaclass(...)(cls) = wrapper(cls)
+            
+            return wrapper #              = dataclass(...)
+
+        return wrapper(cls)   # @dataclass = dataclass(cls) = wrapper(cls)
+    
+"""
+    
+
+
+# In[2]:
+
 
 import random
 import time
 from functools import wraps
 import inspect
-
 
 def to_upper(func):
     print("to_upper")
@@ -61,7 +116,7 @@ print("nen dung inspect.unwrap bo tat ca decorator")
 print(f"{inspect.unwrap(get_names)(['cau', 'dung', 'thong', 'heo']) = }")
 
 
-# In[2]:
+# In[3]:
 
 
 from functools import wraps
@@ -95,8 +150,10 @@ print()
 print(f"{info(five=5, six=6) = }")
 
 
-# In[3]:
+# In[4]:
 
+
+import functools
 
 class DecoratorClassNoParam: 
     __IMPORTANT__ = """
@@ -107,7 +164,11 @@ class DecoratorClassNoParam:
 
     def __init__(self, func): #1 function(func)
         print(f"DecoratorClassNoParam.__init__ start {type(self).__name__}") 
+        
+        #functools.wraps(func) ko dung dc vi thieu param wrapper=self
+        functools.update_wrapper(self, func)
         self.func = func 
+        
         print(f"DecoratorClassNoParam.__init__ end {type(self).__name__}")
       
     def __call__(self, *args, **kwargs): #2 wrapper(*args, **kwds)
@@ -121,7 +182,8 @@ class DecoratorClassNoParam:
   
 
 @DecoratorClassNoParam  # info = @DecoratorClass = DecoratorClass(function)
-def info(first_name='dung', last_name='thong', /, **kwds): 
+def info(first_name='dung', last_name='thong', /, **kwds):
+    """tao la def info()"""
     return dict(first_name=first_name, last_name=last_name, **kwds)
 print()
 
@@ -130,9 +192,12 @@ print()
 print(f"{info = }")
 print(f"{vars(info) = }")
 print(f"{info.func() = } <self.function()>")
+print()
+print(f"{info.__name__ = }")
+print(f"{info.__doc__ = }")
 
 
-# In[4]:
+# In[5]:
 
 
 class DecoratorClassYesParam: 
@@ -161,17 +226,19 @@ class DecoratorClassYesParam:
   
 
 @DecoratorClassYesParam(1, 2) #info = @DecoratorClassYesParam(1,2) = DecoratorClassYesParam(1,2)(function)
-def info(first_name='dung', last_name='thong', /, **kwds): 
+def info(first_name='dung', last_name='thong', /, **kwds):
+    """tao la def info()"""
     return dict(first_name=first_name, last_name=last_name, **kwds)
 print()
 
 print(f"{info(country='viet nam', city='gia lai') = }  <__call__()>")
 print()
 print(f"{info = }")
+print(f"{info.__doc__ = }")
 print(f"{vars(info) = }")
 
 
-# In[5]:
+# In[6]:
 
 
 from functools import wraps
@@ -203,7 +270,7 @@ print()
 print(f"{say_whee() = }")
 
 
-# In[6]:
+# In[7]:
 
 
 from functools import wraps
@@ -236,7 +303,7 @@ print(f"{id(another_one) = }")
 print(f"{first_one is another_one = }")
 
 
-# In[7]:
+# In[8]:
 
 
 import random
@@ -255,7 +322,7 @@ def say_hello(name):
 
 print(PLUGINS)
 
-# @register #cach1
+# @register #cach1 syntax cho cach2
 def be_awesome(name):
     return f"be_awesome: {name!r}"
 
@@ -264,7 +331,7 @@ be_awesome = register(be_awesome) #cach2
 print(PLUGINS)
 
 
-# In[8]:
+# In[9]:
 
 
 import functools
@@ -309,7 +376,7 @@ print()
 fibonacci(8)
 
 
-# In[9]:
+# In[10]:
 
 
 import functools
@@ -326,7 +393,7 @@ print()
 print(f"{fibonacci(8) = }")
 
 
-# In[10]:
+# In[11]:
 
 
 import pint
@@ -358,3 +425,4 @@ print(f"{bolt.to('km per hour') = }")
 
 
 print(f"{bolt.to('mph').m = }")
+
