@@ -97,14 +97,16 @@ class Magic:
     @design("__setitem__")
     def __setitem__(self, key, value):
         print('__setitem__')
-        # self[key] = value
+        # self[key] = value  #RecursionError
+
         self.__dict__[key] = value
+        #self.data[key] = value
     
     #magic[key]
     @design("__getitem__")
     def __getitem__(self, key):
         print("__getitem__")
-        # self[index] #RecursionError
+        # self[index]  #RecursionError
         return self.__dict__[key]
 
     #del magic[key]
@@ -114,40 +116,44 @@ class Magic:
         print('__delitem__')
         del self.__dict__[key]
 
-    #magic.name
+    #magic.name, 
+    #magic.method() => magic.method run __getattribute__ la bound_method sau do bound_method()
+    # lun run khi truy access attr or method du co ton tai hay khong
     @design("__getattribute__")
-    def __getattribute__(self, attr): #3
-        # self.attr ton tai
+    def __getattribute__(self, attrname): #3
         Magic.count_getattribute += 1
         print(f'<{attr}> LUON RUN  __getattribute__ {Magic.count_getattribute}')
-        # super().__getattribute__(attr) # run __getattr__(self, attr) #2
+        
+        # super().__getattribute__(attrname) # run __getattr__(self, attr) #2
         # object.__getattribute__(self,attr) #2
-        return object.__getattribute__(self,attr)
-        #super() | object.__getattribute__(self, attr) return VALUE neu self.attr ton tai, else run __getattr__(self, attr) 1 lan duy nhat
-    
-    #magic.old kho ton tai se run 1 lan
-    @design("__getattr__")
-    def __getattr__(self, attr): #2
-        Magic.count_getattr += 1
-        print(f'<{attr}> khong toan tai __getattr__ {Magic.count_getattr} <{attr}>')
+        return object.__getattribute__(self,attrname)
 
-        value = 'invalid'
-        setattr(self, attr, value)
+        # object.__getattribute__(self,attr) -  neu attr khong ton tai se run them __getattr__(self, attr)
+    
+    #magic.old - old la attrname undefined 
+    @design("__getattr__")
+    def __getattr__(self, attrname): #2
+        Magic.count_getattr += 1
+
+        value = 'default value for attrname undefined'
+
+        setattr(self, attrname, value)
+        # object.__setattr__(self, attrname, value)
+
         return value
 
     #magic.old = 25
     @design("__setattr__")
-    def __setattr__(self, attr, value): #1
+    def __setattr__(self, attrname, value): #1
         # khi tao obj neu co 4 attr se run 4 lan __setattr__
-        self.__dict__[attr] = value
-
         Magic.count_setattr += 1
-        print(f"Tao la __setattr__ {Magic.count_setattr}")
-        if not isinstance(value, list):
-            print(f"<{attr}> {value:.>20}", end='\n'*2)
-        else:
-            print(f"<{attr}> {'':.<20}{value}", end='\n'*2)
+        
+        #khong nen dung self.__dict__ vi se run __getattribute__ them 1 lan
+        # self.__dict__[attrname] = value
 
+        object.__setattr__(self, attrname, value)
+
+        
     #del magic.name
     @design("__delattr__")
     def __delattr__(self, attr):
@@ -293,11 +299,18 @@ class Recursion(Magic):
     # def __setattr__(self, attr, value):
     #     print(f'__setattr__')
     #     print(f"<{attr}> {value:.>20}")
-    #     self.attr = value #RecursionError
+
+    #     self.name = 'dung' #RecursionError
+    #     self.old = 38 #RecursionError
+
+    #     setattr(self, attr, value) #RecursionError
+
 
     def __getattribute__(self, attr):
         print(f"__getattribute__ ")
-        # value = self.attr or getattr(self, attr) # RecusionError
+        # self.old, self.method(), ... RecusionError
+        # getattr(self, attr) # RecusionError
+
         # value = super().__getattribute__(attr)
         # value = object.__getattribute__(self, attr)
         return super().__getattribute__(attr)
@@ -472,4 +485,3 @@ __ITERATOR__ = """
     list(Iteration(1,16,2)), tuple(Iteration(1,12,2))
 
 """
-
