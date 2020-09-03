@@ -1,3 +1,3 @@
-Cuộc thăm dò được Wall Street Journal và NBC News phối hợp thực hiện trong tháng 8 cho thấy tỷ lệ ủng hộ của ông Trump hiện ở mức 41%, kém ứng viên tổng thống của đảng Dân chủ Joe Biden 9%. Cựu phó tổng thống Mỹ cũng thắng thế trước ông Trump trong hầu hết cuộc thăm dò cử tri tại các bang tranh chấp.
-
-Tuy nhiên, một vài khảo sát đã chỉ ra những lợi thế trong lập trường chính trị của ông Trump. Chính những điểm này có thể giúp tổng thống thu hẹp khoảng cách với đối thủ trước khi ngày bầu cử đến.
+First line\n
+Second line\n
+Third line\n
