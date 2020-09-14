@@ -22,11 +22,14 @@ class ComplicatedNamespace:
 
     @classmethod
     def init_with_data(cls, **data):
-        instance = cls()
+        self = cls()
+        
         for key, value in data.items():
             if key in cls.ACCEPTED_VALUES:
-                setattr(instance, key, value)
-        return instance
+                setattr(self, key, value)
+                # chi accept 3 item trong ACCEPTED_VALUES lam attrs
+                
+        return self
 
 
 class Namespace:
@@ -48,4 +51,5 @@ class Namespace:
         accepted_data = {
             k: v for k, v in data.items() if k in self.ACCEPTED_VALUES
         }
+        
         self.__dict__.update(accepted_data)

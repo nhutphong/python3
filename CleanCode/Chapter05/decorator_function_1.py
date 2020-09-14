@@ -6,7 +6,7 @@ Creating a decorator to be applied over a function.
 from functools import wraps
 from unittest import TestCase, main, mock
 
-from log import logger
+import logging
 
 
 class ControlledException(Exception):
@@ -22,7 +22,7 @@ def retry(operation):
             try:
                 return operation(*args, **kwargs)
             except ControlledException as e:
-                logger.info("retrying %s", operation.__qualname__)
+                logging.info("retrying %s", operation.__qualname__)
                 last_raised = e
         raise last_raised
 
@@ -74,7 +74,7 @@ def run_operation(task):
 
 class RetryDecoratorTest(TestCase):
     def setUp(self):
-        self.info = mock.patch("log.logger.info").start()
+        self.info = mock.patch("log.logging.info").start()
 
     def tearDown(self):
         self.info.stop()

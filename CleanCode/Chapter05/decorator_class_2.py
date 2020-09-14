@@ -99,6 +99,14 @@ class LoginEvent:
         self.ip = ip
         self.timestamp = timestamp
 
+note = """ LoginEvent = Serialization(
+                                    username=str.lower,
+                                    password=hide_field,
+                                    ip=show_original,
+                                    timestamp=format_time,
+                                    )(LoginEvent)
+"""
+
 
 class TestLoginEventSerialized(unittest.TestCase):
     def test_serialization(self):

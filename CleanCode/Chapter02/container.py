@@ -14,7 +14,8 @@ class Boundaries:
         self.width = width
         self.height = heigh
 
-    def __contains__(self, coord):
+    # 'value' in boundaries
+    def __contains__(self, coord): #bool
         x, y = coord
         return 0 <= x < self.width and 0 <= y < self.height
 
@@ -25,5 +26,6 @@ class Grid:
         self.height = height
         self.limits = Boundaries(width, height)
 
+    # 'value' in boundaries
     def __contains__(self, coord):
         return coord in self.limits

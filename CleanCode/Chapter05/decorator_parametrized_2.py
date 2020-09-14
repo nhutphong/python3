@@ -5,7 +5,7 @@ Parametrized decorators using callable objects.
 from functools import wraps
 
 from decorator_function_1 import ControlledException
-from log import logger
+import logging
 
 RETRIES_LIMIT = 3
 
@@ -15,22 +15,22 @@ class WithRetry:
         self.retries_limit = retries_limit
         self.allowed_exceptions = allowed_exceptions or (ControlledException,)
 
-    def __call__(self, operation):
-        @wraps(operation)
-        def wrapped(*args, **kwargs):
+    def __call__(self, func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
             last_raised = None
 
             for _ in range(self.retries_limit):
                 try:
-                    return operation(*args, **kwargs)
+                    return func(*args, **kwargs)
                 except self.allowed_exceptions as e:
-                    logger.info(
-                        "retrying %s due to %s", operation.__qualname__, e
+                    logging.info(
+                        "retrying %s due to %s", func.__qualname__, e
                     )
                     last_raised = e
             raise last_raised
 
-        return wrapped
+        return wrapper
 
 
 @WithRetry()

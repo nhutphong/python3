@@ -6,7 +6,7 @@ different objects (e.g. functions, methods), and won't fail.
 """
 from functools import wraps
 
-from log import logger
+import logging
 
 
 class DBDriver:

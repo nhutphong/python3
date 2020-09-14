@@ -8,7 +8,7 @@ from datetime import datetime
 
 class LoginEventSerializer:
     def __init__(self, event):
-        self.event = event
+        self.event = event # login_event
 
     def serialize(self) -> dict:
         return {

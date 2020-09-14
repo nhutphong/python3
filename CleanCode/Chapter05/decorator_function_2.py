@@ -9,7 +9,7 @@ from unittest import TestCase, main, mock
 
 from decorator_function_1 import (ControlledException, OperationObject,
                                   RunWithFailure)
-from log import logger
+import logging
 
 
 class Retry:
@@ -24,7 +24,7 @@ class Retry:
             try:
                 return self.operation(*args, **kwargs)
             except ControlledException as e:
-                logger.info("retrying %s", self.operation.__qualname__)
+                logging.info("retrying %s", self.operation.__qualname__)
                 last_raised = e
         raise last_raised
 
@@ -37,7 +37,7 @@ def run_operation(task):
 
 class RetryDecoratorTest(TestCase):
     def setUp(self):
-        self.info = mock.patch("log.logger.info").start()
+        self.info = mock.patch("log.logging.info").start()
 
     def tearDown(self):
         self.info.stop()

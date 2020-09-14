@@ -6,16 +6,16 @@
 import functools
 import time
 
-from log import logger
+import logging
 
 
 def traced_function(function):
     @functools.wraps(function)
     def wrapped(*args, **kwargs):
-        logger.info("started execution of %s", function.__qualname__)
+        logging.info("started execution of %s", function.__qualname__)
         start_time = time.time()
         result = function(*args, **kwargs)
-        logger.info(
+        logging.info(
             "function %s took %.2fs",
             function.__qualname__,
             time.time() - start_time,
@@ -28,5 +28,5 @@ def traced_function(function):
 @traced_function
 def operation1():
     time.sleep(2)
-    logger.info("running operation 1")
+    logging.info("running operation 1")
     return 2
