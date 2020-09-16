@@ -7,9 +7,21 @@ from log import logger
 
 
 class SharedAttribute:
+    init = 0
+    set_name = 0
+
     def __init__(self, initial_value=None):
+        type(self).init+=1
+
+        print(f"__init__ {type(self).init}")
         self.value = initial_value
         self._name = None
+
+    def __set_name__(self, owner, name):
+        type(self).set_name+=1
+
+        print(f"__set_name__ {type(self).set_name}")
+        self._name = name
 
     def __get__(self, instance, owner):
         if instance is None:
@@ -21,8 +33,6 @@ class SharedAttribute:
     def __set__(self, instance, new_value):
         self.value = new_value
 
-    def __set_name__(self, owner, name):
-        self._name = name
 
 
 class GitFetcher:
