@@ -21,11 +21,13 @@ posts = [
 @app.route("/home")
 def home():
     return render_template('home.html', posts=posts)
+    # posts data pass home.html
 
 
 @app.route("/about")
 def about():
     return render_template('about.html', title='About')
+    # title la title browser
 
 
 if __name__ == '__main__':
