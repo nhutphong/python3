@@ -35,7 +35,7 @@ def about():
 def register():
     form = RegistrationForm()
     
-    if form.validate_on_submit():
+    if form.validate_on_submit(): # co data
         flash(f'Account created for {form.username.data}!', 'success')
         return redirect(url_for('home'))
 
@@ -46,7 +46,7 @@ def register():
 def login():
     form = LoginForm()
 
-    if form.validate_on_submit():
+    if form.validate_on_submit():# co data
         if form.email.data == 'admin@blog.com' and form.password.data == 'password':
             flash('You have been logged in!', 'success') # notification
             return redirect(url_for('home'))
