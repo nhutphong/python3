@@ -7,5 +7,5 @@
 # import sys
 # print(sys.path)
 
-# from .myA import *
-# from .myB import *
+# from .my_a import *
+# from .my_b import *

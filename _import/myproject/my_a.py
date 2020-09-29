@@ -9,6 +9,6 @@ def aaa2():
 
 
 if __name__ == '__main__':
-    print("myA.py tu chay")
+    print("my_a.py tu chay")
 else:
-    print("myA.py duoc import")
+    print("my_a.py duoc import")

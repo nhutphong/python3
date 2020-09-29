@@ -21,6 +21,6 @@ def zzz():
 
 
 if __name__ == '__main__':
-    print("proA.py tu chay")
+    print("pro_a.py tu chay")
 else:
-    print("proA.py duoc import")
+    print("pro_a.py duoc import")

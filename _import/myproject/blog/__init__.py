@@ -10,11 +10,6 @@
 # # trong file __init__.py chi dung relative import
 # # relative import . or ..
 
-# from .blogA import *
-# from .blogB import *
+# from .blog_a import *
+# from .blog_b import *
 # # from ..subpackage1.moduleZ import zzz
-
-
-# # absolute import error
-# # from moduleX import *
-# # from moduleY import *
