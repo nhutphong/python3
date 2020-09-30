@@ -23,12 +23,15 @@ note = """
 
     root> python3 -m project.blog.blog_b.py # run truc tiep c2
 
+    cung cap blog_b.py 
+        from .blog_a import xxx # phai co dot<.>
+
 """
 
 
-from .blog_a import xxx #.file cung folder
+from .blog_a import xxx # .file cung folder bat buoc co dot<.>
 from myproject.product.pro_a import zzz #cach1
-# from ..product.proA import zzz #cach2 <..> thay myproject
+# from ..product.pro_a import zzz #cach2 <..> thay myproject
 
 def yyy():
 	print("tao al yyy() of blogB.py")
