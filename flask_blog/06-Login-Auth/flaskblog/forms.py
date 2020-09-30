@@ -14,6 +14,8 @@ class RegistrationForm(FlaskForm):
                                      validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Sign Up')
 
+    # check form
+    # def validate_<attr_name> default_name cho def check_form
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
         if user:
@@ -29,5 +31,5 @@ class LoginForm(FlaskForm):
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
-    remember = BooleanField('Remember Me')
-    submit = SubmitField('Login')
+    remember = BooleanField('Remember Me') # button check
+    submit = SubmitField('Login') # button submit
