@@ -6,6 +6,7 @@ CarType = Enum('CarType', 'subcompact compact suv')
 class Car: 
     pool = dict() 
  
+    # @classmethod
     def __new__(cls, car_type): 
         obj = cls.pool.get(car_type, None) 
         if not obj: 
