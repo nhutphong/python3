@@ -14,7 +14,7 @@ class RegistrationForm(FlaskForm):
                                      validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Sign Up')
 
-    # check form
+    # In-line Validators
     # def validate_<attr_name> default_name cho def check_form
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
