@@ -1,13 +1,41 @@
 from django.urls import path
+from rest_framework.urlpatterns import format_suffix_patterns
+
 from . import views
 
 
-urlpatterns = [
-	path('', views.apiOverview, name="api-overview"),
-	path('task-list/', views.taskList, name="task-list"),
-	path('task-detail/<str:pk>/', views.taskDetail, name="task-detail"),
-	path('task-create/', views.taskCreate, name="task-create"),
+app_name = 'api'
 
-	path('task-update/<str:pk>/', views.taskUpdate, name="task-update"),
-	path('task-delete/<str:pk>/', views.taskDelete, name="task-delete"),
+
+# 'api/'
+urlpatterns = [
+	path('', views.apiOverview, name="api-overview"), #api/
+	path('tasks/', views.task_list, name="task-list"),
+	path('tasks/<int:pk>/', views.task_detail, name="task-detail"),
 ]
+
+
+# apiview = [
+#     path('articles/', views.ArticleAPIView.as_view(), name="articles"),
+#     path('articles/<int:pk>', views.ArticleDetail.as_view(), name="article-detail"),
+# ]
+
+# urlpatterns += apiview
+
+
+# mixinview = [
+#     path('articles/', views.ArticleListMixin.as_view(), name="articles"),
+#     path('articles/<int:pk>', views.ArticleDetailMixin.as_view(), name="article-detail"),
+# ]
+# urlpatterns += mixinview
+
+
+genericview = [
+    path('articles/', views.ArticleListCreate.as_view(), name="articles"),
+    path('articles/<int:pk>', views.ArticleRetrieveUpdateDestroy.as_view(), name="article-detail"),
+]
+
+urlpatterns += genericview
+
+
+urlpatterns = format_suffix_patterns(urlpatterns)
