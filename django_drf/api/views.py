@@ -163,9 +163,11 @@ class ArticleDetail(APIView):
 from rest_framework import mixins
 from rest_framework import generics
 
-class ArticleListMixin(mixins.ListModelMixin,
-                  mixins.CreateModelMixin,
-                  generics.GenericAPIView):
+class ArticleListMixin(
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    generics.GenericAPIView
+):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
 
@@ -176,10 +178,12 @@ class ArticleListMixin(mixins.ListModelMixin,
         return self.create(request, *args, **kwargs)
 
 
-class ArticleDetailMixin(mixins.RetrieveModelMixin,
-                    mixins.UpdateModelMixin,
-                    mixins.DestroyModelMixin,
-                    generics.GenericAPIView):
+class ArticleDetailMixin(
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    generics.GenericAPIView
+):
 
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
