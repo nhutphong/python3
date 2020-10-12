@@ -9,7 +9,7 @@ app_name = 'api'
 
 # 'api/'
 urlpatterns = [
-	path('', views.apiOverview, name="api-overview"), #api/
+	path('', views.home, name="home"), #api/
 	path('tasks/', views.task_list, name="task-list"),
 	path('tasks/<int:pk>/', views.task_detail, name="task-detail"),
 ]

@@ -17,7 +17,7 @@ from .models import Task, Article
 #view funtion
 
 @api_view(['GET']) # function view
-def apiOverview(request):
+def home(request):
 	api_urls = {
 		'List':'/task-list/',
 		'Detail View':'/task-detail/<str:pk>/',
@@ -32,7 +32,8 @@ def apiOverview(request):
 @api_view(['GET', 'POST'])
 def task_list(request):
     """
-    List all code snippets, or create a new snippet.
+    phai co argument context={'request': request} luc
+    create serializer khi khi inheritance tu class HyperlinkedModelSerializer
     """
     if request.method == 'GET':
         tasks = Task.objects.all().order_by('-id')

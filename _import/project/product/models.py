@@ -1,6 +1,9 @@
 
 
-__all__ = ['zzz']
+
+__all__ = ['model1']
+
+
 import os
 import sys
 
@@ -16,11 +19,11 @@ NOTE = """CACH 1 folder ngoai myproject
 	va run cac files __init__.py khi di qua package tuong ung
 	"""
 
-def zzz():
-	print("Tao la zzz() of proA.py")
+def model1():
+	print("Tao la model1() of product.models.py")
 
 
 if __name__ == '__main__':
-    print("pro_a.py tu chay")
+    print("product.models.py tu chay")
 else:
-    print("pro_a.py duoc import")
+    print("product.models.py duoc import")
