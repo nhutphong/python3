@@ -28,15 +28,25 @@ split windows:
 <C-w>v: vertical=chia doc
 <C-w>s: horizontally= chia ngang
  
-normal mode:
+
+
+                            normal mode:
 key stroke:
 <C-w>o = press ctrl+w break roi press o
 
 
+o : new file
 . : repeat cmd truoc do
 u : undo
+
 3gg=3G : goto line 3
-^ : line first
+gg : dau file
+G : cuoi file
+
+^ : line first word
+g_: line last word
+
+0 : line first
 $ : line last
 
 w: forward(next=dau tu tiep theo)
@@ -59,6 +69,10 @@ gU: make uppercase
 >G: tab word
 A;<esc> : cuoi line($a) them ; press<esc>
 5@a: titlecase
+
+
+find and replace text
+:5,12s/foo/bar/g
 
 
 f<char> search char=chu cai can tim
@@ -98,6 +112,12 @@ cmd mode = (:)
 :t. => duplicate copy and paste vi tri hien tai
 :t$ => paste to end line
 
+# move lines
 :move = :m
 :'<,'>m$ : move select contents to end lines
 :!{cmd}
+:5,7m 21    move lines 5, 6 and 7 to after line 21
+:5,7m 0 move lines 5, 6 and 7 to before first line
+:5,7m $ move lines 5, 6 and 7 to after last line
+:.,.+4m 21  move 5 lines starting at current line to after line 21
+:,+4m14 same (. for current line is assumed)
