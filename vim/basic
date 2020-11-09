@@ -20,7 +20,7 @@ Ctrl + G: Xem thông tin dòng hiện tại
 
 
 
-let mapleader = "'\"
+let mapleader = "\"
 :map <leader>A  haha <Esc>
 : map \A haha <Esc>
 
@@ -59,8 +59,7 @@ d3d: xoa 3 dong
 d3w: delete 3 word(tinh tu vi tri cursor)
 x: cut 1 letter
 c3w new_string<ESC>: override 3 tu= new_string
-. : repeat cmd previous
-yy: copy 1 dong
+yy: copy 1 line
 yiw: copy  word hien tai
 p: paste
 g~: swap case
@@ -102,7 +101,7 @@ U: uppercase
 
 
 cmd mode = (:)
-:write = :w -> save file
+:w[rite] -> save file
 :clo[se]
 
 :shell
@@ -113,7 +112,7 @@ cmd mode = (:)
 :t$ => paste to end line
 
 # move lines
-:move = :m
+:m[ove]
 :'<,'>m$ : move select contents to end lines
 :!{cmd}
 :5,7m 21    move lines 5, 6 and 7 to after line 21
