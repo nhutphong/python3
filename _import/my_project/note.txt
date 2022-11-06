@@ -1,0 +1,45 @@
+note = """
+    
+    moi folders = subpackages nen chua 1 file __init__.py
+    
+    __init__.py tao hop tat ca modules trong app neu can
+    khi from product import *      or import product
+    se run product.__init__.py
+
+    khi from product.productsub import *
+    se run product/__init__.py roi toi ../productsub/__init__.py
+
+    neu import cung folder va khac folder
+    phai xac dinh folder my_project
+
+    create my_project/manage.py cap cao: chua 2 folder_app la product, blog
+        file manage.py NOT dung relative import
+
+        from blog.views import *
+        from product.views import *
+
+    my_project/product/
+    my_project/blog/
+    my_project/manage.py    #NOT relative import la dot(.)
+
+
+
+    run cach 1
+    my_project> python3 manage.py # c1 hight lever file
+    # da tao sys.path toi /my_project
+
+    run cach 2
+    my_project> python3 -m blog.views
+    my_project> python3 -m product.views
+    my_project> python3 -m product.productsub.views
+
+
+    
+    my_project/product/forms.py    
+    my_project/product/productsub/models.py
+    
+    my_project/product/productsub/views.py:
+        from .models import *  <file models.py cung cap views.py of productsub>
+        from ..forms import *   <file forms.py cung cap productsub of product>
+
+"""
